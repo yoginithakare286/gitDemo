@@ -1,0 +1,3923 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{Fragments/before_main :: css-and-scripts}"></head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+	<!--end::Fonts-->
+	<!--begin::Vendor Stylesheets(used for this page only)-->
+	<link th:href="@{/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/assets/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css" />
+	<!--end::Vendor Stylesheets-->
+	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+	<link th:href="@{/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/assets/css/fragment.css}" rel="stylesheet" type="text/css" />
+	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+		
+		/* Remove hover effect */
+		.tabulator-row:hover {
+		    background-color: transparent !important;
+		}
+
+		
+		.tabulator-row .tabulator-cell{
+			color:black !important;
+		}
+		.tabulator-row:hover {
+		    background-color: transparent !important;
+		}
+
+		.tabulator-col.tabulator-sortable .tabulator-col-sorter-element {
+		    background: #241D75 !important;
+		}
+
+		.tabulator .tabulator-header .tabulator-col {
+		    white-space: normal !important;  /* Allow text wrapping */
+		    word-wrap: break-word;           /* Ensure long words break */
+		    overflow-wrap: break-word;        /* Ensures wrapping */
+		    text-align: center;              /* Center text */
+			background: #241D75 !important;
+			color:white;
+		}
+
+		
+		.table-responsive {
+		    width: 100%;
+		    overflow-x: auto; /* Enables horizontal scrolling */
+		    white-space: nowrap; /* Prevents column wrapping */
+		}
+
+		#calculationInputData{
+			margin-top: 2%;
+            min-width: 5504px; /* Ensure table takes full width */		
+		}
+		
+		#calculationOutputData{
+							margin-top: 2%;
+				            min-width: 6461px; /* Ensure table takes full width */		
+						}
+		
+		.table-responsive{
+			width: 100%;
+		}
+		#calculationInputData {
+		    width: 100%;
+		}
+		.htCore td, .htCore th {
+		    text-align: left !important; /* Ensures alignment */
+		}
+
+		body{
+			font-family: Lato!important;
+			background: #F5F5F5!important;;
+
+		}
+		.nav-link.active {
+			position: relative;
+			background-color: white; /* Highlight the active pill with white background */
+			color: #000; /* Change text color to ensure good contrast */
+			border-radius: 5px; /* Optional: add a slight border-radius for better appearance */
+		}
+
+		.nav-link.active::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 4px;
+			background-color: #231D70; /* Bottom line color */
+		}
+
+
+		thead th {
+			color: white;
+			font-size: 1.1rem; /* Increase font size */
+			text-align: center; /* Center-align text */
+		}
+
+
+		.tab-pane {
+			display: none;
+		}
+
+		.tab-pane.active {
+			display: block;
+		}
+
+		#search-wrapper{
+			display: flex;
+			border: 1px solid rgba(0, 0, 0, 0.276);
+			align-items: stretch;
+			border-radius: 50px;
+			background-color: #fff;
+			padding: 7px;
+			overflow: hidden;
+			max-width: 500px;
+			box-shadow: 2px 1px 5px 1px rgba(0, 0, 0, 0.273);
+
+		}
+		#search{
+			border:none;
+			width:550px;
+			font-size: 15px;
+		}
+		#search:focus{
+			outline: none;
+		}
+		.search-icon{
+			margin: 10px;
+			color:rgba(0, 0, 0, 0.564);
+		}
+		#search-button{
+			border:none;
+			cursor: pointer;
+			color:#fff;
+			background-color:#1dbf73;
+			padding:0px 10px;
+		}
+
+		/*.menu-item.active {*/
+		/*	background-color: #231D70; !* Active background color *!*/
+		/*}*/
+
+		.menu-link.nav-item.active {
+			background: #231D70!important; /* Active background color */
+			color: white; /* Optional: Set the text color */
+		}
+
+		.sub-menu-link.sub-nav-item.active {
+			padding: 5px;
+
+			background: #231D70!important; /* Active background color */
+			color: white; /* Optional: Set the text color */
+			border-radius: 10px; /* Adjust the value to control the roundness */
+		}
+
+
+		.menu-item.active {
+			background: #231D70 !important; /* Active background color for parent menu */
+			color: white !important; /* Active text color */
+		}
+
+
+		.menu-sub .menu-item.active {
+
+			background: #3A327B !important; /* Active background color for submenu */
+			color: white !important; /* Active text color for submenu */
+		}
+
+
+		.menu-item.active .menu-title {
+			color: white; /* Active text color */
+		}
+
+		.menu-item.active .menu-icon img {
+			display: inline-block;
+		}
+
+		.menu-item .menu-title {
+			color: inherit; /* Reset color for non-selected menu items */
+		}
+
+		.menu-sub .menu-item .menu-title {
+			color: inherit; /* Reset color for child menu items */
+		}
+
+
+		.admin_section_tab-pane {
+			display: none;
+		}
+
+
+
+		.admin_section_tab-pane.active {
+			display: block;
+		}
+
+		.procurement-rfq_tab-pane {
+			display: none;
+		}
+
+
+
+		.procurement-rfq_tab-pane.active {
+			display: block;
+		}
+
+		.nt_quote_tab-pane {
+			display: none;
+		}
+
+
+
+		.nt_quote_tab-pane.active {
+			display: block;
+		}
+
+
+
+
+		.nav-link.active {
+			position: relative;
+			background-color: white; /* Highlight the active pill with white background */
+			color: #000; /* Change text color to ensure good contrast */
+			border-radius: 5px; /* Optional: add a slight border-radius for better appearance */
+		}
+
+		.nav-link.active::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 4px;
+			background-color: #231D70; /* Bottom line color */
+		}
+
+
+		thead th {
+			color: white;
+			font-size: 1.1rem; /* Increase font size */
+			text-align: center; /* Center-align text */
+		}
+
+		.section-title {
+			font-weight: bold;
+			color: #d63384;
+			margin-bottom: 10px;
+		}
+		.bordered-box {
+			border: 1px solid #dee2e6;
+			padding: 20px;
+			border-radius: 8px;
+			background-color: #f8f9fa;
+		}
+
+		.square {
+			width: 40px;
+			height: 20px;
+			display: inline-block;
+			margin: 0 auto;
+			border: 1px solid #ccc;
+		}
+		.square-green {
+			background-color: green;
+		}
+		.square-yellow {
+			background-color: yellow;
+		}
+		.square-red {
+			background-color: red;
+		}
+		.label-container {
+			text-align: center;
+		}
+
+
+		@media screen and (max-width: 768px) {
+			#role-select {
+				margin-left: 0 !important;
+			}
+		}
+
+		.table-header {
+			background-color: #1E1A70;
+			color: white;
+		}
+
+		.progress-step {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background-color: #e5e5e5;
+			font-size: 16px;
+			font-weight: bold;
+			color: #fff;
+		}
+
+		.progress-step.completed {
+			background-color: #2ECC71;
+		}
+
+		.progress-line {
+			flex-grow: 1;
+			height: 4px;
+			background-color: #e5e5e5;
+
+		}
+
+		.progress-line.active {
+			background-color: #2ECC71;
+		}
+
+		.vendor-table {
+			width: 30%;
+		}
+
+		.progress-section {
+			width: 70%;
+		}
+
+		.version-history {
+			margin-top: 30px;
+		}
+
+		.collapsible-row {
+			display: none;
+		}
+		.toggle-icon {
+			cursor: pointer;
+		}
+		.description-date {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.date {
+			font-size: 0.85rem;
+			color: #555;
+			margin-left: auto;
+			white-space: nowrap;
+		}
+
+
+		.header-cell {
+			background-color: #1e2a78;
+			color: white;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.table img {
+			max-width: 60px;
+			height: auto;
+		}
+		.awarded-icon {
+			text-align: center;
+		}
+		.pdf-button {
+			border: 1px solid #dc3545; /* Red border */
+			color: #dc3545; /* Red text color */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 5px 10px;
+			font-weight: bold;
+			border-radius: 5px;
+			text-decoration: none;
+			float: right;
+			margin-bottom: 10px;
+		}
+		.pdf-button:hover {
+			background-color: #dc3545;
+			color: white;
+			text-decoration: none;
+		}
+		.pdf-icon {
+			margin-right: 5px;
+		}
+
+		.ranking-container {
+
+			/*display: none !important; !* Hidden by default *!*/
+		}
+
+
+		.ranking-button {
+			width: 50px;
+			height: 30px;
+
+			margin-right: 10px;
+			border: none;
+			font-weight: bold;
+			color: white;
+			font-size: 1rem;
+			text-align: center;
+		}
+
+		.ranking-button.r1 { background-color: #8FCE9D; } /* Blue */
+		.ranking-button.r2 { background-color: #FFE08F; } /* Yellow */
+		.ranking-button.r3 { background-color: #FF9F9F; } /* Red */
+
+
+
+		.collapsible-layout {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			background-color: #ffffff;
+			border: 1px solid #ddd;
+			border-collapse: collapse;
+		}
+
+		.row {
+			display: flex;
+			align-items: center;
+			/*border-bottom: 1px solid #ddd;*/
+		}
+
+		.row:last-child {
+			border-bottom: none;
+		}
+
+		.row .cell {
+			padding: 10px;
+			/*border-right: 1px solid #ddd;*/
+			flex: 1;
+		}
+
+		.row .cell:last-child {
+			border-right: none;
+		}
+
+		.icon-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+		}
+
+		.description-date {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.date {
+			font-size: 12px;
+			color: #888;
+		}
+
+		.row-details {
+			background-color: #f9f9f9;
+			padding: 10px;
+		}
+
+
+		.vendor-container {
+			/*max-width: 500px;*/
+			/*margin: 30px auto;*/
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 20px;
+			box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+		}
+		.vendor-header {
+			font-size: 18px;
+
+
+			margin-bottom: 15px;
+		}
+		.vendor-table {
+			width: 300px;
+			max-height: 200px;
+			overflow-y: auto;
+		}
+		.save-btn {
+			width: 100%;
+			background-color: #f46f36;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		.save-btn:hover {
+			background-color: #d85c2b;
+		}
+
+		.container-layout {
+			/*margin: 30px auto;*/
+			/*max-width: 1200px;*/
+			/*background-color: #f8f9fa;*/
+			/*border-radius: 10px;*/
+			/*padding: 20px;*/
+			/*box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);*/
+		}
+		.form-select {
+			width: 200px;
+			margin-bottom: 20px;
+			border-radius: 5px;
+		}
+		.chart-container {
+			width: 100%;
+			height: 300px;
+			background-color: #fff;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 20px;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+		}
+		.table-container {
+			background-color: #fff;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 20px;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+		}
+		.table thead {
+		    background-color: #231D70;
+		    color: #fff;
+		}
+
+		.table th, .table td {
+			text-align: center;
+			vertical-align: middle;
+		}
+
+	</style>
+
+<body id="kt_app_body" data-kt-app-layout="light-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
+<!--begin::Theme mode setup on page load-->
+<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+<!--end::Theme mode setup on page load-->
+
+<!-- Include the Header & Sidebar -->
+<div th:replace="~{Fragments/before_main :: before-main}"></div>
+
+<!-- Main Content Area -->
+<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_content" class="app-content flex-column-fluid mt-4">
+            <div id="kt_app_content_container" class="app-container container-fluid">
+            
+                <!-- Important Note (this is fragment guide html)-->
+                <!-- Developer should start putting their content inside this div  -->
+                <!-- whenever you create new html, there this all dependencies  and structure should present -->
+                
+				
+				<!--begin::Main-->
+							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+								<!--begin::Content wrapper-->
+								<div class="d-flex flex-column flex-column-fluid">
+
+									<!--begin::Content-->
+									<div id="kt_app_content" class="app-content flex-column-fluid mt-4">
+										<!--begin::Content container-->
+										<div id="kt_app_content_container" class="app-container container-fluid" style="">
+
+
+
+											<!-- Tab Content -->
+											<div id="tab-content">
+												<div class="tab-pane active" id="admin">
+
+
+													<ul class="nav flex-wrap border-transparent fw-bold" style="padding: 0px!important; margin: 0px!important;" id="admin_section_tabs" >
+														<!--begin::Nav item-->
+														<li class="admin_nav-item my-1">
+															<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 active" data-tab="employee_list">
+																Employee List
+															</button>
+														</li>
+														<!--end::Nav item-->
+														<li class="admin_nav-item my-1">
+															<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="role_setting">
+																Role Setting
+															</button>
+														</li>
+														<li class="admin_nav-item my-1">
+															<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="assign_permission">
+																Assign Permission
+															</button>
+														</li>
+
+
+														<!--end::Nav item-->
+													</ul>
+
+
+
+
+
+
+
+													<div id="admin_section_tab-content">
+														<div class="admin_section_tab-pane active" id="employee_list" >
+															<div class="d-flex flex-wrap align-items-center justify-content-between" style="height: 120px;">
+																<!-- Grouped Buttons -->
+																<div class="d-flex mb-2 mb-md-0 flex-grow-1 me-3">
+																	<div id="search-wrapper" class="d-flex align-items-center w-100" style="max-width: 500px;">
+																		<i class="search-icon fas fa-search me-2"></i>
+																		<input
+																				type="text"
+																				id="search"
+																				placeholder="Search"
+																				class="form-control form-control-sm w-100"
+																		/>
+																	</div>
+																</div>
+
+																<button
+																		style="background: #FF7020;"
+																		type="submit"
+																		class="btn btn-sm btn-primary"
+																		data-kt-menu-dismiss="true"
+																		data-bs-toggle="modal"
+																		data-bs-target="#addEmployeeModal"
+																>
+																	Add Employee
+																</button>
+
+															</div>
+
+															<div style="overflow-x: auto;"> <!-- Enables horizontal scroll -->
+																<table class="table table-bordered table-hover text-center" style="min-width: 1500px;"> <!-- Min-width ensures wide columns -->
+																	<thead class="text-white" style="background-color: #231D70">
+
+
+																	<tr>
+																		<th scope="col" rowspan="2"><input type="checkbox"></th>
+																		<th scope="col" rowspan="2" style="color: white">Name</th>
+																		<th scope="col" rowspan="2" style="color: white">UserName</th>
+																		<th scope="col" rowspan="2" style="color: white">Password</th>
+																		<th scope="col" rowspan="2" style="color: white">Phone</th>
+																		<th scope="col" rowspan="2" style="color: white">Email</th>
+																		<th scope="col" rowspan="2" style="color: white">City</th>
+
+																		<th scope="col" rowspan="2" style="color: white">Zip</th>
+																		<th scope="col" rowspan="2" style="color: white">Is Admin</th>
+																		<th scope="col" rowspan="2" style="color: white">Role</th>
+																		<th scope="col" rowspan="2" style="color: white">Account Action</th>
+
+																	</tr>
+
+																	</thead>
+																	<tbody>
+																	<tr>
+																		<td><input type="checkbox"></td>
+																		<td>1</td>
+																		<td>PN12345</td>
+																		<td>Widget A</td>
+
+																		<td>1234567890</td>
+																		<td>ABS</td>
+																		<td>4</td>
+																		<td>Cold</td>
+																		<td>Edge</td>
+																		<td>Steel A</td>
+																		<td class="">
+																			<a href="#" class="btn btn-icon  btn-active-color-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editEmployeeModal">
+																				<img src="assets/acount_action_1.svg" alt="Switch Icon" class="img-fluid" style="width: 24px; height: 24px;">
+																			</a>
+																			<a href="#" class="btn btn-icon btn-active-color-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
+																				<img src="assets/acount_action_2.svg" alt="Switch Icon" class="img-fluid" style="width: 24px; height: 24px;">
+																			</a>
+																			<a href="#" class="btn btn-icon btn-active-color-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+																				<img src="assets/acount_action_3.svg" alt="Switch Icon" class="img-fluid" style="width: 24px; height: 24px;">
+																			</a>
+																		</td>
+
+																	</tr>
+
+																	</tbody>
+																</table>
+															</div>
+
+
+														</div>
+														<div class="admin_section_tab-pane" id="role_setting">
+															<!-- Add Role Section -->
+															<div style="background-color: transparent; padding: 20px;  margin-bottom: 20px;">
+																<div class="d-flex align-items-center">
+																	<label for="add-role" style="margin-right: 10px; ;">Add Role</label>
+																	<input type="text" id="add-role" class="form-control" placeholder="Enter Role" style="margin-right: 10px; width: 200px;">
+																	<button class="btn btn-warning" style="background-color: #FF7020; border: none;">Save</button>
+																</div>
+															</div>
+
+
+															<table class="table table-bordered" style="margin: 0; width: 250px;">
+																<thead style="background-color: #241D75; color: white;">
+																<tr>
+																	<th style="text-align: center; width: 25%; color: white!important;">Sr No.</th>
+																	<th style="text-align: center;color: white!important;">Roles List</th>
+																</tr>
+																</thead>
+																<tbody style="background-color: white; color: black;">
+																<tr>
+																	<td style="text-align: center;">1</td>
+																	<td>Tooling Supervisor</td>
+																</tr>
+																<tr>
+																	<td style="text-align: center;">2</td>
+																	<td>Sales Person</td>
+																</tr>
+																<tr>
+																	<td style="text-align: center;">3</td>
+																	<td>Senior Sales Person</td>
+																</tr>
+																<tr>
+																	<td style="text-align: center;">4</td>
+																	<td>Role - 1</td>
+																</tr>
+																<tr>
+																	<td style="text-align: center;">5</td>
+																	<td>Role - 2</td>
+																</tr>
+																</tbody>
+															</table>
+														</div>
+
+														<div class="admin_section_tab-pane" id="assign_permission">
+															<div class="container-fluid mt-5" style="padding-right: 0px!important; padding-left: 0px!important; margin-left: 0px!important; margin-right: 0px!important;">
+																<!-- Role Selection -->
+																<div class="d-flex align-items-center mb-3">
+
+																	<select id="role-select" style="width: 400px!important; margin-left: 100px;" class="form-select w-auto">
+																		<option selected disabled>Select Role</option>
+																		<option value="admin">Admin</option>
+																		<option value="user">User</option>
+																		<option value="manager">Manager</option>
+																	</select>
+																	<button style="background-color: #FF7020" class="btn btn-warning ms-3">Save</button>
+																</div>
+
+
+																<!-- Modules and Menu Assignment -->
+																<div class="p-3" style="background-color: #241D75; color: white; border-radius: 5px; padding-right: 0px!important; padding-left: 0px!important; margin-left: 0px!important; margin-right: 0px!important;" >
+																	<h3 class="mb-0 text-center text-uppercase" style="color: white!important;">Modules and Menu Assign</h3>
+																</div>
+
+																<div class="row mt-3" style="margin-left: -1px; margin-right: -1px;">
+																	<!-- Admin Module -->
+																	<div class="col-md-2" style=" border-radius: 5px; margin-bottom: 15px; padding: 2px;">
+																		<div style="background-color: #241D75; color: white;padding: 10px;   display: flex; justify-content: space-between; align-items: center;">
+																			<span><b>Admin Module</b></span>
+																			<input type="checkbox" style="margin-left: 10px;">
+																		</div>
+																		<!--														border: 1px solid #ddd; border-top: none;-->
+																		<div style="background-color: transparent; padding: 0px; ">
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_admin-permission"><b>Admin Permission</b></label>
+																				<input type="checkbox" id="procurement_admin-permission" >
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_quote-setting"><b>Quote Setting</b></label>
+																				<input type="checkbox" id="procurement_quote-setting">
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_program-setting"><b>Program Setting</b></label>
+																				<input type="checkbox" id="procurement_program-setting">
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_calendar-setting"><b>Calendar Setting</b></label>
+																				<input type="checkbox" id="procurement_calendar-setting">
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_tpr-setting"><b>TPR Setting</b></label>
+																				<input type="checkbox" id="procurement_tpr-setting">
+																			</div>
+																		</div>
+																	</div>
+
+																	<!-- Dashboard Module -->
+																	<div class="col-md-2" style=" border-radius: 5px; margin-bottom: 15px; padding: 2px;">
+																		<div style="background-color: #241D75; color: white;padding: 10px;   display: flex; justify-content: space-between; align-items: center;">
+																			<span><b>Dashboard Module</b></span>
+																			<input type="checkbox" style="margin-left: 10px;">
+																		</div>
+																		<div style="background-color: transparent; padding: 0px; ">
+
+
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="dashboard"><b>Dashboard</b></label>
+																				<input type="checkbox" id="procurement_dashboard">
+																			</div>
+
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_program-analysis"><b>Program Analysis</b></label>
+																				<input type="checkbox" id="procurement_program-analysis">
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_sales-analysis"><b>Sales and Tool Analysis</b></label>
+																				<input type="checkbox" id="procurement_sales-analysis">
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_live-auction"><b>Live Auction</b></label>
+																				<input type="checkbox" id="procurement_live-auction">
+																			</div>
+																		</div>
+																	</div>
+
+																	<!-- Procurement Module -->
+																	<div class="col-md-2" style=" border-radius: 5px; margin-bottom: 15px; padding: 2px;">
+																		<div style="background-color: #241D75; color: white;padding: 10px;   display: flex; justify-content: space-between; align-items: center;">
+																			<span><b>Procurement Module</b></span>
+																			<input type="checkbox" style="margin-left: 10px;">
+																		</div>
+																		<div style="background-color: transparent; padding: 0px; ">
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_rfq"><b>RFQ</b></label>
+																				<input type="checkbox" id="procurement_rfq">
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_po"><b>PO</b></label>
+																				<input type="checkbox" id="procurement_po">
+																			</div>
+																		</div>
+																	</div>
+
+
+
+
+
+																	<div class="col-md-2" style=" border-radius: 5px; margin-bottom: 15px; padding: 2px;">
+																		<div style="background-color: #241D75; color: white;padding: 10px;   display: flex; justify-content: space-between; align-items: center;">
+																			<span><b>Quote Module</b></span>
+																			<input type="checkbox" style="margin-left: 10px;">
+																		</div>
+																		<div style="background-color: transparent; padding: 0px; ">
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="rfq"><b>NT Quote</b></label>
+																				<input type="checkbox" >
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_po"><b>EC Quote</b></label>
+																				<input type="checkbox" >
+																			</div>
+
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_po"><b>Molding & TT Quote</b></label>
+																				<input type="checkbox" >
+																			</div>
+																		</div>
+																	</div>
+
+																	<div class="col-md-2" style=" border-radius: 5px; margin-bottom: 15px; padding: 2px;">
+																		<div style="background-color: #241D75; color: white;padding: 10px;   display: flex; justify-content: space-between; align-items: center;">
+																			<span><b>Program Module</b></span>
+																			<input type="checkbox" style="margin-left: 10px;">
+																		</div>
+																		<div style="background-color: transparent; padding: 0px; ">
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="rfq"><b>Program List</b></label>
+																				<input type="checkbox" >
+																			</div>
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_po"><b>Tooling Process Report</b></label>
+																				<input type="checkbox" >
+																			</div>
+
+																			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;padding: 10px; background: white;">
+																				<label for="procurement_po"><b>Saved Report</b></label>
+																				<input type="checkbox" >
+																			</div>
+																		</div>
+																	</div>
+
+
+																	<div class="col-md-2" style=" border-radius: 5px; margin-bottom: 15px; padding: 2px; ">
+																		<div style="background-color: #241D75; color: white;padding: 10px;   display: flex; justify-content: space-between; align-items: center;">
+																			<span><b>Vendor Module</b></span>
+																			<input type="checkbox" style="margin-left: 10px;">
+																		</div>
+
+
+																		<div class="col-md-12 mt-4" style=" border-radius: 5px; margin-bottom: 15px; padding: 2px; ">
+																			<div style="background-color: #241D75; color: white;padding: 10px;   display: flex; justify-content: space-between; align-items: center;">
+																				<span><b>Message Module</b></span>
+																				<input type="checkbox" style="margin-left: 10px;">
+																			</div>
+
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+
+
+
+														</div>
+													</div>
+
+												</div>
+											</div>
+
+
+											<div class="tab-pane" id="admin-permission">
+												<h3>Admin Permission Content</h3>
+												<p>This is the content for the Admin Permission tab.</p>
+											</div>
+
+											<div class="tab-pane" id="quote-testing">
+												<h3>Admin Quote Testing</h3>
+												<p>This is the content for the Admin Quote Testing tab.</p>
+											</div>
+
+											<div class="tab-pane" id="procurement-rfq">
+												<div class="row" style="background-color: #ffffff; height: 120px; align-items: center; margin-right: 1px; margin-left: 1px">
+													<!-- Begin: Column -->
+													<div class="col-12 col-sm-6 col-md-3 d-flex align-items-center justify-content-start mb-3 mb-md-0 pe-md-3">
+														<h2 class="mb-0">RFQ ID: <b style="color: #231D70;">NT3737</b></h2>
+													</div>
+													<!-- End: Column -->
+
+													<!-- Begin: Column -->
+													<div class="col-12 col-sm-6 col-md-3 d-flex align-items-center justify-content-start mb-3 mb-md-0">
+														<h2 class="mb-0">RFQ START DATE: <b style="color: #0075FF;">02-10-2024</b></h2>
+													</div>
+													<!-- End: Column -->
+
+													<!-- Begin: Column -->
+													<div class="col-12 col-sm-6 col-md-3 d-flex align-items-center justify-content-md-end mb-3 mb-md-0 pe-md-3">
+														<h2 class="text-md-end mb-0">RFQ END DATE: <b style="color: #0075FF;">02-12-2024</b></h2>
+													</div>
+													<!-- End: Column -->
+
+
+												<!--	<div class="col-12 col-sm-6 col-md-3 d-flex align-items-center justify-content-md-end">
+														<h2 class="text-md-end mb-0">STATUS: <b style="color: #0A750E;">ACTIVE</b></h2>
+													</div>-->
+
+													<div class="col-12 col-sm-6 col-md-3 d-flex align-items-center justify-content-md-end">
+														<!-- STATUS Container -->
+														<div id="status-container" class="">
+															<h2 class="text-md-end mb-0">STATUS: <b style="color: #0A750E;">ACTIVE</b></h2>
+														</div>
+
+														<!-- Ranking Container -->
+														<div id="ranking-container" class="col-12 col-sm-6 col-md-3 d-flex align-items-center justify-content-md-end ranking-container"  >
+															<h2 class="text-md-end mb-0 me-3">RANKING:</h2>
+															<button class="ranking-button r1">R1</button>
+															<button class="ranking-button r2">R2</button>
+															<button class="ranking-button r3">R3</button>
+														</div>
+
+
+													</div>
+
+												</div>
+
+
+												<div class="" style="margin-right: 10px; margin-left: 10px;">
+
+
+													<div class="row d-flex justify-content-between align-items-center text-center"
+														 style="background-color: #f8f9fa; border-radius: 5px;">
+														<!-- Request for Quote -->
+														<div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-center"
+															 style="border: 1px solid #ccc; height: 200px; margin-bottom: 10px;">
+
+															<select class="form-select" style="max-width: 250px;">
+																<option value="RFQ">Request For Quote (RFQ)</option>
+
+															</select>
+
+															<!-- Button with 10px gap -->
+															<button class="btn btn-warning mt-8" style="background-color: #FF7020; color: white; margin-top: 10px;">Invite Vendors for RA</button>
+														</div>
+
+														<div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-center"
+															 style="border: 1px solid #ccc; height: 200px; margin-bottom: 10px; position: relative;">
+
+															<!-- Centered Content -->
+															<div class="d-flex flex-column align-items-center justify-content-center" style="position: absolute; top: 51%; transform: translateY(-50%); width: 100%">
+																<div class="d-flex align-items-center justify-content-center" style="width: 100%; height: auto;">
+																	<label class="fw-semibold mb-2" style="margin-right: 15px;">Select Days: </label>
+																	<select class="form-select me-2" style="max-width: 100px;">
+																		<option value="2">02</option>
+																		<option value="3">03</option>
+																		<option value="4">04</option>
+																		<option value="5">05</option>
+																		<option value="6">06</option>
+																	</select>
+																</div>
+
+																<!-- Button with 10px gap -->
+																<button class="btn btn-warning mt-8" style="background-color: #FF7020; color: white; margin-top: 10px;">Extend</button>
+															</div>
+														</div>
+
+
+														<!-- RFQ Remaining Time -->
+														<div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-center"
+															 style="border: 1px solid #ccc; height: 200px; margin-bottom: 10px; position: relative;">
+
+															<!-- Centered Content -->
+															<div class="d-flex flex-column align-items-center justify-content-center" style="position: absolute; top: 51%; transform: translateY(-50%);">
+																<div class="d-flex justify-content-center justify-content-center" style="width: 100%; height: auto;">
+																	<label class="fw-semibold text-danger mb-2" style="margin-right: 15px; color: black!important; margin-top: 10px;"><b style="color: #D40066">RFQ</b> Remaining Time:</label>
+																	<div class="text-center me-2">
+																		<span class="fw-bold text-pink" style="color: #D40066; font-size: 1.2rem; background-color: white; display: block; padding: 5px; border-radius: 5px;">02</span>
+																		<span>Days</span>
+																	</div>
+																	<div class="text-center me-2">
+																		<span class="fw-bold text-pink" style="color: #D40066; font-size: 1.2rem; background-color: white; display: block; padding: 5px; border-radius: 5px;">00</span>
+																		<span>Hours</span>
+																	</div>
+																	<div class="text-center me-2">
+																		<span class="fw-bold text-pink" style="color: #D40066; font-size: 1.2rem; background-color: white; display: block; padding: 5px; border-radius: 5px;">00</span>
+																		<span>Minutes</span>
+																	</div>
+																	<div class="text-center">
+																		<span class="fw-bold text-pink" style="color: #D40066; font-size: 1.2rem; background-color: white; display: block; padding: 5px; border-radius: 5px;">00</span>
+																		<span>Seconds</span>
+																	</div>
+																</div>
+
+																<!-- Button with 10px gap -->
+																<button class="btn btn-warning mt-8" style="background-color: #FF7020; color: white; margin-top: 0px;">Pause</button>
+															</div>
+														</div>
+
+													</div>
+
+
+												</div>
+
+
+
+
+
+
+												<!--begin::Nav-->
+												<ul class="nav flex-wrap border-transparent fw-bold" style="padding: 0px!important; margin: 0px!important;" id="procurement-rfq_tabs">
+													<!--begin::Nav item-->
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase active" data-tab="rfq">
+															RFQ
+														</button>
+													</li>
+													<!--end::Nav item-->
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="vendor-metric">
+															Vendor Metric
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="technical-security">
+															Technical Security
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="prices">
+															Prices
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="auction">
+															Auction
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="awarded">
+															Awarded
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="messages">
+															Messages
+														</button>
+													</li>
+													<!--end::Nav item-->
+												</ul>
+												<!--end::Nav-->
+
+
+
+												<div id="procurement-rfq_tab-content">
+													<div class="procurement-rfq_tab-pane active" id="rfq" >
+														<div style="display: flex; align-items: center; justify-content: space-between; height: 60px;">
+
+															<!-- Grouped Buttons -->
+															<div style="display: flex;">
+																<button style="background: #FF7020; margin-right: 10px;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Add Row</button>
+																<button style="background: #FF7020; margin-right: 10px;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Duplicate Row</button>
+																<button style="background: #FF7020; margin-right: 10px;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Show/Hide Columns</button>
+																<button style="background: #FF7020; margin-right: 10px;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Save</button>
+																<button style="background: white; border-style: solid; border-width:1px;border-color: #FF7020; color: #FF7020" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Delete</button>
+															</div>
+
+															<!-- Send Email Button -->
+															<button style="background: #FF7020;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Send Email</button>
+														</div>
+
+														<div style="overflow-x: auto;"> <!-- Enables horizontal scroll -->
+															<table class="table table-bordered table-hover" style="min-width: 1500px;"> <!-- Min-width ensures wide columns -->
+																<thead class="text-white" style="background-color: #231D70">
+
+																<tr>
+
+																	<th scope="col" colspan="1" style="color: white; background: #F5F5F5" class="text-center"></th>
+																	<th scope="col" colspan="8" style="color: white; background: #7C75D1" class="text-center">Sales</th>
+
+																</tr>
+																<tr>
+																	<th scope="col" rowspan="2"><input type="checkbox"></th>
+																	<th scope="col" rowspan="2" style="color: white">Item</th>
+																	<th scope="col" width="160" rowspan="2" style="color: white">Part Number</th>
+																	<th scope="col"  width="160" rowspan="2" style="color: white">Part Name</th>
+																	<th scope="col"  width="160" rowspan="2" style="color: white">Part Picture</th>
+																	<th scope="col" rowspan="2" style="color: white">Resin</th>
+																	<th scope="col" rowspan="2" style="color: white">Cav.</th>
+																	<th scope="col" colspan="2" style="color: white" class="text-center">Injection System</th>
+																	<th scope="col" rowspan="2" style="color: white">Steel</th>
+																	<th scope="col" rowspan="2" style="color: white">Ejection</th>
+																	<th scope="col"  width="160" rowspan="2" style="color: white">Mold Features</th>
+																	<th scope="col" rowspan="2" style="color: white">EAU</th>
+																	<th scope="col" rowspan="2" style="color: white">Target Price</th>
+																	<th scope="col" rowspan="2" style="color: white">CAD File Attachment</th>
+																	<th scope="col" rowspan="2" style="color: white">Buyer Attachment</th>
+																	<th scope="col" rowspan="2" style="color: white">Note</th>
+																	<th scope="col" rowspan="2" style="color: white" width="200">Vendors</th>
+																</tr>
+																<tr>
+																	<th scope="col" style="color: white">Runner</th>
+																	<th scope="col" style="color: white">Gate</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr>
+																	<td><input type="checkbox"></td>
+																	<td>1</td>
+																	<td>PN12345</td>
+																	<td>Widget A</td>
+																	<td>
+																		<button class="btn btn-link p-0" onclick="document.getElementById('file-input-1').click()" style="color: #0075FF
+				;">Upload Image</button>
+																		<input type="file" id="file-input-1" style="display: none;">
+																	</td>
+																	<td>ABS</td>
+																	<td>4</td>
+																	<td>Cold</td>
+																	<td>Edge</td>
+																	<td>Steel A</td>
+																	<td>Hydraulic</td>
+																	<td>Quick Release</td>
+																	<td>10,000</td>
+																	<td>$5.00</td>
+																	<td>
+																		<button class="btn btn-link p-0" onclick="document.getElementById('file-input-1').click()" style="color: #0075FF
+				;">Attach</button>
+																		<input type="file" id="file-input-1" style="display: none;">
+																	</td>
+																	<td>
+																		<button class="btn btn-link p-0" onclick="document.getElementById('file-input-2').click()" style="color: #0075FF
+				;">Attach</button>
+																		<input type="file" id="file-input-2" style="display: none;">
+																	</td>
+																	<td>Test Note</td>
+																	<td>
+																		<div>
+
+
+																			<button data-bs-toggle="modal"
+																					data-bs-target="#addNewVendor" class="btn btn-link p-0">+ Add Vendor</button><br>
+																			<div>
+																				<input type="checkbox" id="vendor-bsj" checked>
+																				<label for="vendor-bsj">BSJ</label><br>
+																				<input type="checkbox" id="vendor-kendy" checked>
+																				<label for="vendor-kendy">Kendy</label>
+																			</div>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><input type="checkbox"></td>
+																	<td>2</td>
+																	<td>PN67890</td>
+																	<td>Gadget B</td>
+																	<td>
+																		<button class="btn btn-link p-0" onclick="document.getElementById('file-input-1').click()" style="color: #0075FF
+				;">Upload Image</button>
+																		<input type="file" id="file-input-1" style="display: none;">
+																	</td>
+																	<td>Polycarbonate</td>
+																	<td>2</td>
+																	<td>Hot</td>
+																	<td>Direct</td>
+																	<td>Steel B</td>
+																	<td>Manual</td>
+																	<td>Standard</td>
+																	<td>5,000</td>
+																	<td>$7.50</td>
+																	<td>
+																		<button class="btn btn-link p-0" onclick="document.getElementById('file-input-1').click()" style="color: #0075FF
+				;">Attach</button>
+																		<input type="file" id="file-input-1" style="display: none;">
+																	</td>
+																	<td>
+																		<button class="btn btn-link p-0" onclick="document.getElementById('file-input-2').click()" style="color: #0075FF
+				;">Attach</button>
+																		<input type="file" id="file-input-2" style="display: none;">
+																	</td>
+																	<td>Second Test Note</td>
+																	<td>
+																		<div>
+																			<button class="btn btn-link p-0">+ Add Vendor</button><br>
+																			<div>
+																				<input type="checkbox" id="vendor-abc" checked>
+																				<label for="vendor-abc">ABC</label><br>
+																				<input type="checkbox" id="vendor-xyz" checked>
+																				<label for="vendor-xyz">XYZ</label>
+																			</div>
+																		</div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+														</div>
+
+
+													</div>
+													<div class="procurement-rfq_tab-pane" id="vendor-metric">
+														<div class="container-fluid my-5">
+															<!-- Vendor Table and Progress Section -->
+															<div class="d-flex">
+																<!-- Vendor Table -->
+																<div class="vendor-table me-4">
+																	<table class="table table-bordered text-center" style="margin: 0; width: 250px;">
+
+																		<thead>
+																		<tr class="table-header">
+																			<th style="color: white">Vendors</th>
+																		</tr>
+																		</thead>
+																		<tbody>
+																		<tr style="background-color: white">
+																			<td>BSJ</td>
+																		</tr>
+																		<tr style="background-color: white">
+																			<td>Kendy</td>
+																		</tr>
+																		<tr style="background-color: white">
+																			<td>V1</td>
+																		</tr>
+																		</tbody>
+
+																	</table>
+																</div>
+
+																<!-- Progress Section -->
+																<div class="progress-section" style="width: 360px;">
+																	<!-- Link Click Section -->
+
+																	<div class="d-flex justify-content-between text-center mb-3">
+																		<div class="progress-heading">
+																			<span style="color: #0075FF;" class="fw-bold">LINK CLICK</span>
+																		</div>
+																		<div class="progress-heading">
+																			<span style="color: #0075FF;" class="fw-bold">LOGIN</span>
+																		</div>
+																		<div class="progress-heading">
+																			<span style="color: #0075FF;" class="fw-bold">PDF LINK</span>
+																		</div>
+																	</div>
+
+																	<div class="d-flex align-items-center mb-4">
+
+																		<div class="d-flex align-items-center w-100">
+																			<div class="progress-step completed">&#10003;</div>
+																			<div class="progress-line active"></div>
+																			<div class="progress-step completed">&#10003;</div>
+																			<div class="progress-line active"></div>
+																			<div class="progress-step">&#9675;</div>
+																		</div>
+																	</div>
+																	<!-- Login Section -->
+																	<div class="d-flex align-items-center mb-4">
+
+																		<div class="d-flex align-items-center w-100">
+																			<div class="progress-step completed">&#10003;</div>
+																			<div class="progress-line active"></div>
+																			<div class="progress-step">&#9675;</div>
+																			<div class="progress-line"></div>
+																			<div class="progress-step">&#9675;</div>
+																		</div>
+																	</div>
+																	<!-- PDF Link Section -->
+																	<div class="d-flex align-items-center">
+
+																		<div class="d-flex align-items-center w-100">
+																			<div class="progress-step">&#9675;</div>
+																			<div class="progress-line"></div>
+																			<div class="progress-step">&#9675;</div>
+																			<div class="progress-line"></div>
+																			<div class="progress-step">&#9675;</div>
+																		</div>
+																	</div>
+																</div>
+
+															</div>
+
+															<!-- Version History -->
+															<div class="version-history">
+																<h5 class="fw-bold" style=" text-decoration: underline;">Version History</h5>
+																<table class="table table-bordered text-center">
+																	<thead>
+																	<tr class="table-header">
+																		<th style="color: white">Version</th>
+																		<th style="color: white">Date</th>
+																		<th style="color: white">Time</th>
+																		<th style="color: white">Created By</th>
+																		<th style="color: white">Status</th>
+																		<th style="color: white">Notes</th>
+																	</tr>
+																	</thead>
+																	<tbody>
+																	<tr>
+																		<td><a href="#" class="text-primary" style=" text-decoration: underline;color: #0075FF!important;">NT3737-B</a></td>
+																		<td>03-08-2024</td>
+																		<td>12:37 pm</td>
+																		<td>CPS Team</td>
+																		<td>Active</td>
+																		<td>Added new item in the list as per the client need</td>
+																	</tr>
+																	<tr>
+																		<td><a href="#" class="text-primary" style=" text-decoration: underline;">NT3737-B</a></td>
+																		<td>03-08-2024</td>
+																		<td>12:37 pm</td>
+																		<td>CPS Team</td>
+																		<td>Active</td>
+																		<td>Added new item in the list as per the client need</td>
+																	</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+													<div class="procurement-rfq_tab-pane" id="technical-security">
+														<div class="container-fluid my-5">
+
+															<div class="collapsible-layout">
+																<div class="row" id="row1">
+																	<div class="cell" style="flex: 0!important;">
+																		<div class="icon-container" style="margin-left: 10px;">
+																			<img
+																					src="assets/plus_icon.svg"
+																					width="15"
+																					class="toggle-icon"
+																					id="icon-row1"
+																					onclick="toggleRow2('row1-details')"
+																					alt="Toggle Icon"
+																			/>
+																		</div>
+																	</div>
+																	<div class="cell" style="flex: 0!important;">V1</div>
+																	<div class="cell" style="flex: 0!important;"><img src="https://picsum.photos/50" alt="Part Picture"></div>
+																	<div class="cell"></div>
+																	<div class="cell"></div>
+																	<div class="cell"></div>
+																	<div class="cell">
+
+																		<select id="role-select" style="width: 200px!important; margin-left: 20px;" class="form-select w-auto">
+																			<option selected disabled>Select</option>
+																			<option selected disabled>Accepted</option>
+																			<option selected disabled>In Review</option>
+																			<option selected disabled>Rejected</option>
+
+																		</select>
+																	</div>
+																	<div class="cell">
+																		<button
+																				class="btn btn-warning"
+																				style="background-color: #FF7020; color: white; height: 42px;"
+																				data-bs-toggle="modal"
+																				data-bs-target="#update_status_modal">
+																			Update Status
+																		</button>
+																	</div>
+
+																	<div class="cell">
+
+																		<button class="btn btn-warning" style="background-color: #FF7020; color: white; height: 42px">Clarification</button>
+																	</div>
+																</div>
+
+																<div class="row-details" id="row1-details" style="display: none;">
+																	<div style="overflow-x: auto;"> <!-- Enables horizontal scroll -->
+																		<table class="table table-bordered table-hover" style="min-width: 2500px;"> <!-- Min-width ensures wide columns -->
+																			<thead class="text-white" style="background-color: #231D70">
+
+																			<tr>
+
+																				<th scope="col" colspan="18" style="color: white; background: #F5F5F5" class="text-center"></th>
+																				<th scope="col" colspan="8" style="color: white; background: #7C75D1" class="text-center">Sales</th>
+
+																			</tr>
+																			<tr>
+																				<th scope="col" rowspan="2"><input type="checkbox"></th>
+																				<th scope="col" rowspan="2" style="color: white">Item</th>
+																				<th scope="col" width="160" rowspan="2" style="color: white">Part Number</th>
+																				<th scope="col"  width="160" rowspan="2" style="color: white">Part Name</th>
+																				<th scope="col"  width="160" rowspan="2" style="color: white">Part Picture</th>
+																				<th scope="col" rowspan="2" style="color: white">Resin</th>
+																				<th scope="col" rowspan="2" style="color: white">Cav.</th>
+																				<th scope="col" colspan="2" style="color: white" class="text-center">Injection System</th>
+																				<th scope="col" rowspan="2" style="color: white">Steel</th>
+																				<th scope="col" rowspan="2" style="color: white">Ejection</th>
+																				<th scope="col"  width="160" rowspan="2" style="color: white">Mold Features</th>
+																				<th scope="col" rowspan="2" style="color: white">EAU</th>
+																				<th scope="col" rowspan="2" style="color: white">Target Price</th>
+																				<th scope="col" rowspan="2" style="color: white">CAD File Name</th>
+																				<th scope="col" rowspan="2" style="color: white">Buyer Attachment</th>
+																				<th scope="col" rowspan="2" style="color: white">Note</th>
+																				<th scope="col" rowspan="2" style="color: white">Mold Size (mm)</th>
+																				<th scope="col" rowspan="2" style="color: white">Mold Features</th>
+																				<th scope="col" rowspan="2" style="color: white">Hot Runner</th>
+																				<th scope="col" rowspan="2" style="color: white">Mold</th>
+																				<th scope="col" rowspan="2" style="color: white">Total</th>
+																				<th scope="col"  rowspan="2" style="color: white; ">Lead Time
+																					in Weeks</th>
+																				<th scope="col" rowspan="2" style="color: white">Vendor Notes</th>
+																				<th scope="col" rowspan="2" style="color: white">Vendor
+																					Attachment</th>
+
+																			</tr>
+																			<tr>
+																				<th scope="col" style="color: white">Runner</th>
+																				<th scope="col" style="color: white">Gate</th>
+																			</tr>
+																			</thead>
+																			<tbody>
+																			<tr style="text-align: center; vertical-align: middle;">
+																				<td><input type="checkbox"></td>
+																				<td>1</td>
+																				<td>PN12345</td>
+																				<td>Widget A</td>
+																				<td>
+																					<img src="https://picsum.photos/50" alt="Part Picture">
+																				</td>
+																				<td>ABS</td>
+																				<td>4</td>
+																				<td>Cold</td>
+																				<td>Edge</td>
+																				<td>Steel A</td>
+																				<td>Hydraulic</td>
+																				<td>Quick Release</td>
+																				<td>10,000</td>
+																				<td>$5.00</td>
+																				<td style="text-decoration: underline; color: #0075FF;">80110789.stp</td>
+																				<td style="text-decoration: underline; color: #0075FF;">doc_file1.pdf</td>
+																				<td>Test Note</td>
+																				<td>250*350*360mm 250kg</td>
+																				<td>(2) Slides</td>
+																				<td>US$ 1,500</td>
+																				<td>US$ 30,151</td>
+																				<td>US$ 31,651</td>
+																				<td>8</td>
+																				<td></td>
+																				<td>
+																					<div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+																						<img
+																								src="assets/visual.svg"
+																								alt="Icon"
+																								width="15"
+																								height="15"
+																						/>
+																						<span style="text-decoration: underline; color: #0075FF;">V4_doc1</span>
+																					</div>
+																				</td>
+																			</tr>
+																			</tbody>
+
+																		</table>
+																	</div>
+																</div>
+															</div>
+
+															<div class="collapsible-layout">
+																<div class="row" id="row2">
+																	<div class="cell" style="flex: 0!important;">
+																		<div class="icon-container" style="margin-left: 10px;">
+																			<img
+																					src="assets/plus_icon.svg"
+																					width="15"
+																					class="toggle-icon"
+																					id="icon-row2"
+																					onclick="toggleRow2('row2-details')"
+																					alt="Toggle Icon"
+																			/>
+																		</div>
+																	</div>
+																	<div class="cell" style="flex: 0!important;">V2</div>
+																	<div class="cell" style="flex: 0!important;"><img src="https://picsum.photos/50" alt="Part Picture"></div>
+																	<div class="cell"></div>
+																	<div class="cell"></div>
+																	<div class="cell"></div>
+																	<div class="cell">
+
+																		<select id="role-select" style="width: 200px!important; margin-left: 20px;" class="form-select w-auto">
+																			<option selected disabled>Accepted</option>
+
+																		</select>
+																	</div>
+
+
+																	<div class="cell">
+																		<button
+																				class="btn btn-warning"
+																				style="background-color: #FF7020; color: white; height: 42px;"
+																				data-bs-toggle="modal"
+																				data-bs-target="#update_status_modal">
+																			Update Status
+																		</button>
+																	</div>
+
+
+																	<div class="cell">
+
+																		<button class="btn btn-warning" style="background-color: #FF7020; color: white; height: 42px">Clarification</button>
+																	</div>
+																</div>
+
+																<div class="row-details" id="row2-details" style="display: none;">
+																	<div style="overflow-x: auto;"> <!-- Enables horizontal scroll -->
+																		<table class="table table-bordered table-hover" style="min-width: 2500px;"> <!-- Min-width ensures wide columns -->
+																			<thead class="text-white" style="background-color: #231D70">
+
+																			<tr>
+
+																				<th scope="col" colspan="18" style="color: white; background: #F5F5F5" class="text-center"></th>
+																				<th scope="col" colspan="8" style="color: white; background: #7C75D1" class="text-center">Sales</th>
+
+																			</tr>
+																			<tr>
+																				<th scope="col" rowspan="2"><input type="checkbox"></th>
+																				<th scope="col" rowspan="2" style="color: white">Item</th>
+																				<th scope="col" width="160" rowspan="2" style="color: white">Part Number</th>
+																				<th scope="col"  width="160" rowspan="2" style="color: white">Part Name</th>
+																				<th scope="col"  width="160" rowspan="2" style="color: white">Part Picture</th>
+																				<th scope="col" rowspan="2" style="color: white">Resin</th>
+																				<th scope="col" rowspan="2" style="color: white">Cav.</th>
+																				<th scope="col" colspan="2" style="color: white" class="text-center">Injection System</th>
+																				<th scope="col" rowspan="2" style="color: white">Steel</th>
+																				<th scope="col" rowspan="2" style="color: white">Ejection</th>
+																				<th scope="col"  width="160" rowspan="2" style="color: white">Mold Features</th>
+																				<th scope="col" rowspan="2" style="color: white">EAU</th>
+																				<th scope="col" rowspan="2" style="color: white">Target Price</th>
+																				<th scope="col" rowspan="2" style="color: white">CAD File Name</th>
+																				<th scope="col" rowspan="2" style="color: white">Buyer Attachment</th>
+																				<th scope="col" rowspan="2" style="color: white">Note</th>
+																				<th scope="col" rowspan="2" style="color: white">Mold Size (mm)</th>
+																				<th scope="col" rowspan="2" style="color: white">Mold Features</th>
+																				<th scope="col" rowspan="2" style="color: white">Hot Runner</th>
+																				<th scope="col" rowspan="2" style="color: white">Mold</th>
+																				<th scope="col" rowspan="2" style="color: white">Total</th>
+																				<th scope="col"  rowspan="2" style="color: white; ">Lead Time
+																					in Weeks</th>
+																				<th scope="col" rowspan="2" style="color: white">Vendor Notes</th>
+																				<th scope="col" rowspan="2" style="color: white">Vendor
+																					Attachment</th>
+
+																			</tr>
+																			<tr>
+																				<th scope="col" style="color: white">Runner</th>
+																				<th scope="col" style="color: white">Gate</th>
+																			</tr>
+																			</thead>
+																			<tbody>
+																			<tr style="text-align: center; vertical-align: middle;">
+																				<td><input type="checkbox"></td>
+																				<td>1</td>
+																				<td>PN12345</td>
+																				<td>Widget A</td>
+																				<td>
+																					<img src="https://picsum.photos/50" alt="Part Picture">
+																				</td>
+																				<td>ABS</td>
+																				<td>4</td>
+																				<td>Cold</td>
+																				<td>Edge</td>
+																				<td>Steel A</td>
+																				<td>Hydraulic</td>
+																				<td>Quick Release</td>
+																				<td>10,000</td>
+																				<td>$5.00</td>
+																				<td style="text-decoration: underline; color: #0075FF;">80110789.stp</td>
+																				<td style="text-decoration: underline; color: #0075FF;">doc_file1.pdf</td>
+																				<td>Test Note</td>
+																				<td>250*350*360mm 250kg</td>
+																				<td>(2) Slides</td>
+																				<td>US$ 1,500</td>
+																				<td>US$ 30,151</td>
+																				<td>US$ 31,651</td>
+																				<td>8</td>
+																				<td></td>
+																				<td>
+																					<div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+																						<img
+																								src="assets/visual.svg"
+																								alt="Icon"
+																								width="15"
+																								height="15"
+																						/>
+																						<span style="text-decoration: underline; color: #0075FF;">V4_doc1</span>
+																					</div>
+																				</td>
+																			</tr>
+																			</tbody>
+
+																		</table>
+																	</div>
+																</div>
+															</div>
+
+															<!-- Version History -->
+															<div class="version-history">
+																<h5 class="fw-bold text-uppercase" style=" text-decoration: underline;background: #E3E3E3; padding: 10px; margin-bottom: 0px;">Version History</h5>
+																<table class="table table-bordered text-center">
+																	<thead>
+																	<tr class="table-header">
+																		<th style="color: white">Version</th>
+																		<th style="color: white">Date</th>
+																		<th style="color: white">Time</th>
+																		<th style="color: white">Created By</th>
+																		<th style="color: white">Status</th>
+																		<th style="color: white">Notes</th>
+																	</tr>
+																	</thead>
+																	<tbody>
+																	<tr>
+																		<td style="background: #fff;"><a href="#" class="text-primary" style=" text-decoration: underline;color: #0075FF!important;">NT3737-B</a></td>
+																		<td style="background: #fff;">03-08-2024</td>
+																		<td style="background: #fff;">12:37 pm</td>
+																		<td style="background: #fff;">CPS Team</td>
+																		<td style="background: #fff;">Active</td>
+																		<td style="background: #fff;">Added new item in the list as per the client need</td>
+																	</tr>
+																	<tr>
+																		<td style="background: #E3E3E3;"><a href="#" class="text-primary" style=" text-decoration: underline;">NT3737-B</a></td>
+																		<td style="background: #E3E3E3;">03-08-2024</td>
+																		<td style="background: #E3E3E3;">12:37 pm</td>
+																		<td style="background: #E3E3E3;">CPS Team</td>
+																		<td style="background: #E3E3E3;">Active</td>
+																		<td style="background: #E3E3E3;">Added new item in the list as per the client need</td>
+																	</tr>
+																	</tbody>
+																</table>
+															</div>
+
+
+														</div>
+													</div>
+													<div class="procurement-rfq_tab-pane" id="prices">
+														<div style="display: flex; align-items: center; justify-content: space-between; height: 60px;">
+
+															<!-- Grouped Buttons -->
+															<div style="display: flex;">
+
+
+																<button style="visibility: hidden;background: white; border-style: solid; border-width:1px;border-color: #FF7020; color: #FF7020" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Delete</button>
+																<select id="role-select" style="width: 400px!important; margin-left: 20px;" class="form-select w-auto">
+																	<option selected disabled>Select Scenario</option>
+
+																</select>
+															</div>
+
+															<!-- Send Email Button -->
+															<button style="background: #FF7020;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Award</button>
+														</div>
+
+														<div style="overflow-x: auto;"> <!-- Enables horizontal scroll -->
+															<table class="table table-bordered table-hover mt-7" style="min-width: 3500px; "> <!-- Min-width ensures wide columns -->
+																<thead class="text-white" style="background-color: #231D70; color: white!important;">
+
+																<tr>
+
+																	<th scope="col" colspan="7" style="color: white; background: #F5F5F5" class="text-center"></th>
+																	<th scope="col" colspan="5" style="color: white; background: #7C75D1" class="text-center">Vendors</th>
+																	<th scope="col" colspan="1" style="color: white; background: #7C75D1" class="text-center">Input</th>
+																	<th scope="col" colspan="1" style="color: white;background: #F5F5F5" class="text-center"></th>
+																	<th scope="col" colspan="1" style="color: white; background: #7C75D1" class="text-center">Input</th>
+																	<th scope="col" colspan="1" style="color: white;background: #F5F5F5" class="text-center"></th>
+																	<th scope="col" colspan="1" style="color: white; background: #7C75D1" class="text-center">Input</th>
+																	<th scope="col" colspan="2" style="color: white;background: #F5F5F5" class="text-center"></th>
+																	<th scope="col" colspan="3" style="color: white; background: #7C75D1" class="text-center">Input</th>
+
+																</tr>
+																<tr>
+																	<th style="color: white;" width="100">Item</th>
+																	<th style="color: white;" width="200">Part Number</th>
+																	<th style="color: white;" width="200">Part Name</th>
+																	<th style="color: white;" width="200">Part Picture</th>
+																	<th style="color: white;" width="200">Target Price</th>
+																	<th style="color: white;" width="200">Vendors</th>
+																	<th style="color: white;" width="200">Country</th>
+																	<th style="color: white;" width="200">Hot Runner</th>
+																	<th style="color: white;" width="200">Mold</th>
+																	<th style="color: white;" width="200">Total Price</th>
+																	<th style="color: white;" width="200">Select Vendor to Award</th>
+																	<th style="color: white;" width="200">Lead Time in Weeks</th>
+																	<th style="color: white;" width="200">Margin Factor</th>
+																	<th style="color: white; width: 500px;">Cost to Design and Build Injection Mold per CPS Standards, FOB China</th>
+
+																	<th style="color: white;" width="200">Shipping Factor</th>
+																	<th style="color: white;" width="400">Ocean Freight Cost per Container Ship to Cumberland, Opelika AL</th>
+																	<th style="color: white;" width="400">Cumberland Landing Cost Disassembly / Clean / Prep for Shipment Final Shipment Cost from Cumberland</th>
+																	<th style="color: white;" width="100">Tariff Factor</th>
+																	<th style="color: white;" width="300">Calculated Tariffs Cost</th>
+																	<th style="color: white;" width="400">Total Cumberland Landed Price (including freight, duties, taxes, insurance, and 25% tariff)</th>
+																	<th style="color: white;" width="400">Budgetary Texturing Pricing: To be confirmed at marked parts or approval to grain</th>
+																	<th style="color: white;" width="200">Mold Size (mm)</th>
+																	<th style="color: white;" width="200">Mold Weight (kg)</th>
+																	<th style="color: white;" width="200">Mold Life Expectancy (Shots)</th>
+																	<th style="color: white;" width="400">Total Cost Comparison (Mold Cost + Shipping + Landing + Tariff)</th>
+																</tr>
+
+
+
+																</thead>
+																<tbody style="text-align: center; vertical-align: middle;">
+																<tr>
+																	<td>1</td>
+																	<td>80110789</td>
+																	<td>Bumper, Corner</td>
+																	<td><img src="https://picsum.photos/50" alt="Part Picture"></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td>US$ 1,800</td>
+																	<td>250x350x360</td>
+																	<td>250kg</td>
+																	<td>5,000,000</td>
+																	<td></td>
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"><img src="https://picsum.photos/50" alt="Part Picture"> China</td>
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: white">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white">8</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">40%</td>
+																	<td style="background: white">US$ 44,311</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">11%</td>
+																	<td style="background: white">US$ 3,482</td>
+																	<td style="background: white">US$ 1,400</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">25%</td>
+																	<td style="background: white">US$ 7,913</td>
+																	<td style="background: white">US$ 57,106</td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">US$ 44,445</td>
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"><img src="https://picsum.photos/50" alt="Part Picture"> China</td>
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: white">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white">8</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">40%</td>
+																	<td style="background: white">US$ 44,311</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">11%</td>
+																	<td style="background: white">US$ 3,482</td>
+																	<td style="background: white">US$ 1,400</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">25%</td>
+																	<td style="background: white">US$ 7,913</td>
+																	<td style="background: white">US$ 57,106</td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">US$ 44,445</td>
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"><img src="https://picsum.photos/50" alt="Part Picture"> China</td>
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: white">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white">8</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">40%</td>
+																	<td style="background: white">US$ 44,311</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">11%</td>
+																	<td style="background: white">US$ 3,482</td>
+																	<td style="background: white">US$ 1,400</td>
+																	<td style="text-decoration: underline; color: #0075FF;background: white">25%</td>
+																	<td style="background: white">US$ 7,913</td>
+																	<td style="background: white">US$ 57,106</td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">US$ 44,445</td>
+																</tr>
+
+																<tr>
+																	<td>2</td>
+																	<td>80110789</td>
+																	<td>Bumper, Corner</td>
+																	<td><img src="https://picsum.photos/50" alt="Part Picture"></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td>US$ 1,800</td>
+																	<td>250x350x360</td>
+																	<td>250kg</td>
+																	<td>5,000,000</td>
+																	<td></td>
+																</tr>
+																</tbody>
+
+															</table>
+														</div>
+													</div>
+													<div class="procurement-rfq_tab-pane" id="auction">
+														<div style="display: flex; align-items: center; justify-content: space-between; height: 60px;">
+
+															<!-- Grouped Buttons -->
+															<div style="display: flex;">
+
+
+																<button style="visibility: hidden;background: white; border-style: solid; border-width:1px;border-color: #FF7020; color: #FF7020" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Delete</button>
+
+															</div>
+
+															<!-- Send Email Button -->
+															<button style="background: #FF7020;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Award</button>
+														</div>
+
+														<div style="overflow-x: auto;"> <!-- Enables horizontal scroll -->
+															<table class="table table-bordered table-hover mt-7" style="min-width: 2000px; "> <!-- Min-width ensures wide columns -->
+																<thead class="text-white" style="background-color: #231D70; color: white!important;">
+
+																<tr>
+
+																	<th scope="col" colspan="7" style="color: white; background: #F5F5F5" class="text-center"></th>
+																	<th scope="col" colspan="5" style="color: white; background: #7C75D1" class="text-center">Vendors</th>
+																	<th scope="col" colspan="1" style="color: white; background: #7C75D1" class="text-center">Input</th>
+																	<th scope="col" colspan="1" style="color: white;background: #F5F5F5" class="text-center"></th>
+
+
+																</tr>
+																<tr>
+																	<th style="color: white;" width="100">Item</th>
+																	<th style="color: white;" width="200">Part Number</th>
+																	<th style="color: white;" width="200">Part Name</th>
+																	<th style="color: white;" width="200">Part Picture</th>
+																	<th style="color: white;" width="200">Target Price</th>
+																	<th style="color: white;" width="200">Vendors</th>
+
+																	<th style="color: white;" width="200">Hot Runner</th>
+																	<th style="color: white;" width="200">Mold</th>
+																	<th style="color: white;" width="200">Total Price</th>
+																	<th style="color: white;" width="200">Select Vendor to Award</th>
+																	<th style="color: white;" width="200">Vendor Pricing use for Quote</th>
+																	<th style="color: white;" width="200">Lead Time in Weeks</th>
+																	<th style="color: white;" width="50">Rank</th>
+
+																</tr>
+
+
+
+																</thead>
+																<tbody style="text-align: center; vertical-align: middle;">
+																<tr>
+																	<td>1</td>
+																	<td>80110789</td>
+																	<td>Bumper, Corner</td>
+																	<td><img src="https://picsum.photos/50" alt="Part Picture"></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+
+																	<td></td>
+																	<td></td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">BSJ</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #FF9F9F;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white"><input type="checkbox"></td>
+
+																	<td style="background: white">8</td>
+																	<td style="background: #FF9F9F;">R3</td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">Kendy</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #8FCE9D;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white"><input type="checkbox"></td>
+
+																	<td style="background: white">8</td>
+																	<td style="background: #8FCE9D;">R1</td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">V1</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #FFE08F;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: #fff; text-align: center">
+
+																		<img
+																				src="assets/trophy_test.svg"
+
+																		/>
+
+																	</td>
+																	<td style="background: white">8</td>
+																	<td style="background: #FFE08F;">R2</td>
+
+																</tr>
+
+																<tr>
+																	<td>1</td>
+																	<td>80110789</td>
+																	<td>Bumper, Corner</td>
+																	<td><img src="https://picsum.photos/50" alt="Part Picture"></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+
+																	<td></td>
+																	<td></td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">BSJ</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #FF9F9F;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white"><input type="checkbox"></td>
+
+																	<td style="background: white">8</td>
+																	<td style="background: #FF9F9F;">R3</td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">Kendy</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #8FCE9D;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white"><input type="checkbox"></td>
+
+																	<td style="background: white">8</td>
+																	<td style="background: #8FCE9D;">R1</td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">V1</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #FFE08F;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: #fff; text-align: center">
+
+																		<img
+																				src="assets/trophy_test.svg"
+
+																		/>
+
+																	</td>
+																	<td style="background: white">8</td>
+																	<td style="background: #FFE08F;">R2</td>
+
+																</tr>
+
+
+																<tr>
+																	<td>1</td>
+																	<td>80110789</td>
+																	<td>Bumper, Corner</td>
+																	<td><img src="https://picsum.photos/50" alt="Part Picture"></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																	<td></td>
+
+																	<td></td>
+																	<td></td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">BSJ</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #FF9F9F;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white"><input checked type="checkbox"></td>
+
+																	<td style="background: white">8</td>
+																	<td style="background: #FF9F9F;">R3</td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">Kendy</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #8FCE9D;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: white"><input type="checkbox"></td>
+
+																	<td style="background: white">8</td>
+																	<td style="background: #8FCE9D;">R1</td>
+
+																</tr>
+
+																<tr>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white"></td>
+																	<td style="background: white">V1</td>
+
+																	<td style="background: white">US$ 1,500</td>
+																	<td style="background: white">US$ 30,151</td>
+																	<td style="background: #FFE08F;">US$ 31,651</td>
+																	<td style="background: white"><input type="checkbox"></td>
+																	<td style="background: #fff; text-align: center">
+
+																		<img
+																				src="assets/trophy_test.svg"
+
+																		/>
+
+																	</td>
+																	<td style="background: white">8</td>
+																	<td style="background: #FFE08F;">R2</td>
+
+																</tr>
+
+
+
+																</tbody>
+
+															</table>
+
+
+														</div>
+
+														<div class="version-history">
+															<h5 class="fw-bold" style=" text-decoration: underline;">PRICES HISTORY</h5>
+
+															<div class="container-layout">
+																<div class="row">
+																	<!-- Part Number Dropdown -->
+																	<div class="col-12 mb-3">
+																		<label for="partNumber" class="form-label">Part Number</label>
+																		<select id="partNumber" class="form-select">
+																			<option selected>80110789</option>
+																			<option>80110790</option>
+																			<option>80110791</option>
+																		</select>
+																	</div>
+																</div>
+																<div class="row">
+																	<!-- Chart Section -->
+																	<div class="col-lg-6">
+																		<div class="chart-container">
+																			<canvas id="priceChart"></canvas>
+																		</div>
+																	</div>
+																	<!-- Table Section -->
+																	<div class="col-lg-6">
+																		<div class="table-container" style="height: 300px;">
+																			<table class="table">
+																				<thead>
+																				<tr>
+																					<th>Participants</th>
+																					<th>Total Price</th>
+																					<th>Submission Date</th>
+																					<th>Submission Time</th>
+																				</tr>
+																				</thead>
+																				<tbody>
+																				<tr>
+																					<td>Kendy</td>
+																					<td>US$ 7,600</td>
+																					<td>02-11-2024</td>
+																					<td>12:32:47 pm</td>
+																				</tr>
+																				<tr>
+																					<td>V1</td>
+																					<td>US$ 13,000</td>
+																					<td>02-12-2024</td>
+																					<td>10:45:56 am</td>
+																				</tr>
+																				<tr>
+																					<td>BSJ</td>
+																					<td>US$ 30,151</td>
+																					<td>02-12-2024</td>
+																					<td>11:45:35 am</td>
+																				</tr>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="procurement-rfq_tab-pane" id="awarded">
+														<div class="container-fluid mt-4">
+															<a href="#" class="pdf-button">
+																<span class="pdf-icon"><img
+																		src="assets/pdf_icon.svg"
+
+																/></span> Customer PDF
+															</a>
+
+															<table class="table table-bordered align-middle">
+																<thead>
+																<tr>
+																	<th style="background: #241D75; color: white" class="header-cell"><input type="checkbox"></th>
+																	<th style="background: #241D75;color: white" class="header-cell">Item</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Part Number</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Part Name</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Part Picture</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Target Price</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Vendors</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Total Price</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Lead Time in Weeks</th>
+																	<th style="background: #241D75;color: white" class="header-cell">Awarded</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr>
+																	<td style="background: #fff; text-align: center"><input type="checkbox"></td>
+																	<td style="background: #fff; text-align: center">1</td>
+																	<td style="background: #fff; text-align: center">80110789</td>
+																	<td style="background: #fff; text-align: center">Bumper, Corner</td>
+																	<td style="background: #fff; text-align: center"><img src="https://picsum.photos/60" alt="Part Picture"></td>
+																	<td style="background: #fff; text-align: center"></td>
+																	<td style="background: #fff; text-align: center">V1</td>
+																	<td style="background: #fff; text-align: center">US$ 13,000</td>
+																	<td style="background: #fff; text-align: center">8</td>
+																	<td style="background: #fff; text-align: center">
+
+																		<img
+																				src="assets/trophy_test.svg"
+
+																		/>
+
+																	</td>
+																</tr>
+																<tr>
+																	<td style="background: #fff; text-align: center"><input type="checkbox"></td>
+																	<td style="background: #fff; text-align: center">2</td>
+																	<td style="background: #fff; text-align: center">80110789</td>
+																	<td style="background: #fff; text-align: center">Bumper, Corner</td>
+																	<td style="background: #fff; text-align: center"><img src="https://picsum.photos/60" alt="Part Picture"></td>
+																	<td style="background: #fff; text-align: center"></td>
+																	<td style="background: #fff; text-align: center">V1</td>
+																	<td style="background: #fff; text-align: center">US$ 13,000</td>
+																	<td style="background: #fff; text-align: center">8</td>
+
+																	<td style="background: #fff; text-align: center">
+
+																			<img
+																					src="assets/trophy_test.svg"
+
+																			/>
+
+																	</td>
+																</tr>
+																<!-- Add additional rows as needed -->
+																</tbody>
+															</table>
+														</div>
+													</div>
+													<div class="procurement-rfq_tab-pane" id="messages">
+														<div class="container-fluid my-5">
+															<table class="table table-bordered">
+																<thead class="table-dark">
+																<tr>
+																	<th style="background: #241D75;"></th>
+																	<th style="background: #241D75;">Vendor</th>
+																	<th style="background: #241D75;">From</th>
+																	<th style="background: #241D75;">To</th>
+																	<th style="background: #241D75;">Subject</th>
+																	<th style="background: #241D75;">Description</th>
+																</tr>
+																</thead>
+																<tbody>
+																<!-- Parent Row -->
+																<tr>
+																	<td style="background: #ffffff;" width="10">
+																		<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+																			<img
+																					src="assets/plus_icon.svg"
+																					width="15"
+																					class="toggle-icon"
+																					id="icon-row1"
+																					onclick="toggleRow('row1')"
+																					alt="Toggle Icon"
+																			/>
+																		</div>
+																	</td>
+
+																	<td style="background: #ffffff;">V1</td>
+																	<td style="background: #ffffff;">sales@a1toolcorp.com</td>
+																	<td style="background: #ffffff;">Quotes@enchro.com</td>
+																	<td style="background: #ffffff;">Invitation to participate in RA</td>
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Your are invite to participate in reverse auction(RA) for RFQ...</span>
+																			<span class="date">11:59 AM</span>
+																		</div>
+																	</td>
+																</tr>
+																<!-- Collapsible Rows -->
+																<tr id="row1" class="collapsible-row">
+																	<td style="background: #ffffff;"></td>
+																	<td style="background: #ffffff;">sales@a1toolcorp.com</td>
+																	<td style="background: #ffffff;">Quotes@enchro.com</td>
+																	<td style="background: #ffffff;">Technical Scrutiny Approval for RFQ Id-NT0021</td>
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Your Technical Scrutiny has been approved for RFQ Id-1602...</span>
+																			<span class="date">Oct 2</span>
+																		</div>
+																	</td>
+
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Your are invite to participate in reverse auction(RA) for RFQ...</span>
+																			<span class="date">11:59 AM</span>
+																		</div>
+																	</td>
+																</tr>
+																<tr id="row1" class="collapsible-row">
+																	<td style="background: #ffffff;"></td>
+																	<td style="background: #ffffff;">Quotes@enchro.com</td>
+																	<td style="background: #ffffff;">sales@a1toolcorp.com</td>
+																	<td style="background: #ffffff;">Deviation Clarification Submitted for RFQ Id-NT0021</td>
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Clarification for deviation has been sent, please check and up...</span>
+																			<span class="date">Oct 2</span>
+																		</div>
+																	</td>
+
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Your are invite to participate in reverse auction(RA) for RFQ...</span>
+																			<span class="date">11:59 AM</span>
+																		</div>
+																	</td>
+																</tr>
+																<!-- Second Parent Row -->
+																<tr>
+																	<td style="background: #ffffff;" width="10">
+																		<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+																			<img
+																					src="assets/plus_icon.svg"
+																					width="15"
+																					class="toggle-icon"
+																					id="icon-row2"
+																					onclick="toggleRow('row2')"
+																					alt="Toggle Icon"
+																			/>
+																		</div>
+																	</td>
+
+																	<td style="background: #ffffff;">V1</td>
+																	<td style="background: #ffffff;">sales@a1toolcorp.com</td>
+																	<td style="background: #ffffff;">jgarcia@duro-chrome.com</td>
+																	<td style="background: #ffffff;">Technical Scrutiny Approval for RFQ Id-NT0021</td>
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Your Technical Scrutiny has been approved for RFQ Id-NT0021...</span>
+																			<span class="date">Oct 2</span>
+																		</div>
+																	</td>
+																</tr>
+																<!-- Collapsible Rows -->
+																<tr id="row2" class="collapsible-row">
+																	<td style="background: #ffffff;"></td>
+																	<td style="background: #ffffff;">sales@a1toolcorp.com</td>
+																	<td style="background: #ffffff;">Quotes@enchro.com</td>
+																	<td style="background: #ffffff;">Deviation Clarification Submitted for RFQ Id-NT0021</td>
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>You have successfully uploaded clarification against RFQ Id...</span>
+																			<span class="date">Oct 2</span>
+																		</div>
+																	</td>
+
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Your are invite to participate in reverse auction(RA) for RFQ...</span>
+																			<span class="date">11:59 AM</span>
+																		</div>
+																	</td>
+																</tr>
+																<tr id="row2" class="collapsible-row">
+																	<td style="background: #ffffff;"></td>
+																	<td style="background: #ffffff;">sales@a1toolcorp.com</td>
+																	<td style="background: #ffffff;">Quotes@enchro.com</td>
+																	<td style="background: #ffffff;">Deviation Clarification Submitted for RFQ Id-NT0021</td>
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>You have successfully uploaded clarification against RFQ Id...</span>
+																			<span class="date">Oct 2</span>
+																		</div>
+																	</td>
+
+																	<td style="background: #ffffff;">
+																		<div class="description-date">
+																			<span>Your are invite to participate in reverse auction(RA) for RFQ...</span>
+																			<span class="date">11:59 AM</span>
+																		</div>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+
+												<div class="card mb-5 mb-xl-10">
+
+
+
+
+
+
+												</div>
+
+											</div>
+
+											<div class="tab-pane" id="dashboard">
+												<h3>Dashboard Content</h3>
+												<p>This is the content for the PO tab.</p>
+											</div>
+
+
+
+
+
+											<div class="tab-pane" id="procurement">
+												<h3>Procurement Content</h3>
+												<p>This is the content for the PO tab.</p>
+											</div>
+											<div class="tab-pane" id="quote">
+												<h3>Quote Content Screen Done</h3>
+												<p>Implementation Pending</p>
+											</div>
+
+
+
+
+											<div class="tab-pane" id="nt-quote">
+
+
+
+
+												<ul class="nav flex-wrap border-transparent fw-bold" style="padding: 0px!important; margin: 0px!important;" id="nt_quote_tabs">
+
+													<!--begin::Nav item-->
+
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1  active" data-tab="feasibility_cover">
+															Feasibility Cover
+														</button>
+													</li>
+
+
+
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="cost_overview">
+															Cost Overview
+														</button>
+													</li>
+
+
+
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="cost_cover">
+															Cost Cover
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="customer_po">
+															Customer PO
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="vendor_quote">
+															Vendor Quote
+														</button>
+													</li>
+													<li class="nav-item my-1">
+														<button class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 " data-tab="vendor_po">
+															Vendor PO
+														</button>
+													</li>
+
+
+
+
+
+
+
+
+
+												</ul>
+
+
+
+												<div id="nt_quote_tab-content">
+													<div class="nt_quote_tab-pane active" id="feasibility_cover" >
+														<div style="text-align: end;">
+
+															<button style="background: #FF7020; margin-right: 10px;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">PDF</button>
+															<button style="background: #FF7020; margin-right: 10px;" type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Save</button>
+
+														</div>
+
+
+														<div class="card-body py-10">
+
+															<div class="row">
+																<!--begin::Col-->
+																<div class="col-xl-8 mb-15 mb-xl-0 pe-5">
+
+																	<h2 class="mb-9" style="color: #0067C6">RFQ QUOTE# : <b style="">NT3737</b></h2>
+																</div>
+
+																<div class="col-xl-4">
+																	<div class="input-group" style="display: inline-flex; align-items: flex-start; width: 100%; flex-wrap: nowrap;">
+																		<span class="input-group-text" style="flex-shrink: 0; margin-right: 0; padding-right: 10px; padding-left: 18px;">QSF</span>
+																		<input class="form-control" aria-label="With textarea" style="flex-grow: 1; margin-left: 0; padding-left: 10px; height: 44px;">
+																	</div>
+
+																	<div class="input-group mt-2" style="display: inline-flex; align-items: center; width: 100%; flex-wrap: nowrap;">
+																		<span class="input-group-text" style="flex-shrink: 0; margin-right: 0; padding-right: 10px; padding-left: 18px;">REV</span>
+																		<input class="form-control" aria-label="With textarea" style="flex-grow: 1; margin-left: 0; padding-left: 10px; height: 44px;">
+																	</div>
+
+																	<div class="input-group mt-2" style="display: inline-flex; align-items: center; width: 100%; flex-wrap: nowrap;">
+																		<span class="input-group-text" style="flex-shrink: 0; margin-right: 0; padding-right: 10px; padding-left: 10px;">DATE</span>
+																		<input class="form-control" aria-label="With textarea" style="flex-grow: 1; margin-left: 0; padding-left: 10px; height: 44px;">
+																	</div>
+																</div>
+															</div>
+
+
+
+
+														</div>
+
+														<div class="bg-primary text-white p-3 rounded" >
+															<h3 style="color: white; padding: 0!important; margin: 0!important;">CONTACT & PROJECT INFORMATION</h3>
+														</div>
+
+														<div class="row mt-4">
+															<div class="col-md-6">
+																<div class="section-title" style="font-size: 20px!important; text-decoration: underline;">
+																	Contact Information
+																</div>
+																<div>
+																	<div class="mb-3 d-flex align-items-center">
+																		<label for="customerName" class="form-label me-3" style="width: 150px;">Customer Name</label>
+																		<input type="text" class="form-control" id="customerName" value="Plastic Omnium">
+																	</div>
+																	<div class="mb-3 d-flex align-items-center">
+																		<label for="contactTime" class="form-label me-3" style="width: 150px;">Contact / Time</label>
+																		<input type="text" class="form-control" id="contactTime" value="Scott Petersen">
+																	</div>
+																	<div class="mb-3 d-flex align-items-center">
+																		<label for="phone" class="form-label me-3" style="width: 150px;">Phone</label>
+																		<input type="tel" class="form-control" id="phone" value="334.821.5033">
+																	</div>
+																	<div class="mb-3 d-flex align-items-center">
+																		<label for="email" class="form-label me-3" style="width: 150px;">Email</label>
+																		<input type="email" class="form-control" id="email" value="lauren.crowe@cumberland.com">
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="section-title" style="font-size: 20px!important; text-decoration: underline;">
+
+																	<br>
+																</div>
+																<div>
+																	<div class="mb-3 d-flex align-items-center">
+																		<label for="riskEvaluation" class="form-label me-3" style="width: 150px;">Overall Project Risk Evaluation</label>
+																		<select class="form-select" id="riskEvaluation">
+																			<option selected>Choose...</option>
+																			<option value="1">Low</option>
+																			<option value="2">Medium</option>
+																			<option value="3">High</option>
+																		</select>
+																	</div>
+
+																	<div>
+																		<span class="bead bead-green"></span>
+																		<span class="bead bead-red"></span>
+																	</div>
+																	<!-- Labels -->
+																	<div class="row justify-content-center">
+																		<div class="col-auto text-center">
+																			<div class="square square-green"></div>
+																			<p class="bead-label text-success mt-2">Low</p>
+																		</div>
+																		<div class="col-auto text-center">
+																			<div class="square square-yellow"></div>
+																			<p class="bead-label text-warning mt-2">Medium</p>
+																		</div>
+																		<div class="col-auto text-center">
+																			<div class="square square-red"></div>
+																			<p class="bead-label text-danger mt-2">High</p>
+																		</div>
+																	</div>
+
+																	<div class="mb-3 d-flex align-items-center position-relative">
+																		<label for="assessmentDate" class="form-label me-3" style="width: 150px;">Assessment Date</label>
+
+																		<div class="position-relative w-100">
+																			<input
+																					placeholder="MM/DD/YYYY"
+																					type="text"
+																					class="form-control pe-5"
+																					id="assessmentDate">
+
+																			<i class="bi bi-calendar position-absolute top-50 translate-middle-y me-3"
+																			   style="right: 10px;"></i> <!-- Adjust icon position as needed -->
+																		</div>
+																	</div>
+
+																	<div class="mb-3 d-flex align-items-center position-relative">
+																		<label for="reAssessmentDate" class="form-label me-3" style="width: 150px;">ReassessmentDate Date</label>
+
+																		<div class="position-relative w-100">
+																			<input
+																					placeholder="MM/DD/YYYY"
+																					type="text"
+																					class="form-control pe-5"
+																					id="reAssessmentDate">
+
+																			<i class="bi bi-calendar position-absolute top-50 translate-middle-y me-3"
+																			   style="right: 10px;"></i> <!-- Adjust icon position as needed -->
+																		</div>
+																	</div>
+
+
+																</div>
+															</div>
+														</div>
+
+
+														<div class="row mt-4">
+															<div class="col-md-12">
+																<div class="section-title" style="font-size: 20px!important;text-decoration: underline;">Project Information</div>
+
+																<div class="">
+																	<div class="row">
+																		<div class="col-md-6">
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="projectName" class="form-label me-3" style="width: 150px;">Project Name</label>
+																				<input type="text" class="form-control" id="projectName" value="G65 & G66 PRIORITY 1 PARTS">
+																			</div>
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="projectInformation" class="form-label me-3" style="width: 150px;">Project Information</label>
+																				<input type="text" class="form-control" id="projectInformation">
+																			</div>
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="projectManager" class="form-label me-3" style="width: 150px;">Project Manager</label>
+																				<input type="text" class="form-control" id="projectManager">
+																			</div>
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="projectRequirement" class="form-label me-3" style="width: 150px;">Project Requirement</label>
+																				<input type="text" class="form-control" id="projectRequirement">
+																			</div>
+																		</div>
+																		<div class="col-md-6">
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="lengthOfProject" class="form-label me-3" style="width: 150px;">Length of Project</label>
+																				<input type="text" class="form-control" id="lengthOfProject">
+																			</div>
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="newMold" class="form-label me-3" style="width: 150px;">New Mold</label>
+																				<input type="text" class="form-control" id="newMold">
+																			</div>
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="transferMold" class="form-label me-3" style="width: 150px;">Transfer Mold</label>
+																				<input type="text" class="form-control" id="transferMold">
+																			</div>
+																			<div class="mb-3 d-flex align-items-center">
+																				<label for="contactReviewDate" class="form-label me-3" style="width: 150px;">Contact Review Date</label>
+																				<input
+																						placeholder="MM/DD/YYYY"
+																						type="text"
+																						class="form-control"
+																						id="contactReviewDate">
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+															</div>
+														</div>
+
+
+
+														<!-- Accordion -->
+														<div class="panel-group mt-10" id="accordion">
+															<!-- Panel 1 -->
+															<div class="panel panel-default">
+																<div class="panel-heading" style="background-color: #231D70; color: white; padding: 10px 15px !important;">
+																	<h4 class="panel-title">
+																		<a data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse1" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: white;">
+																			Component Data
+																			<span class="dropdown-icon" style="margin-left: 10px;">
+				               <img style="width: 15px;height: 15px" src="assets/polygon.svg"  alt="user" />
+				            </span>
+																		</a>
+																	</h4>
+																</div>
+
+																<div id="collapse1" class="panel-collapse collapse ">
+
+																	<div class="table-responsive">
+																		<table class="table table-bordered table-hover" style="min-width: 1500px;">
+																			<thead class="text-white" style="background-color: #231D70">
+																			<tr>
+																				<th width="100" scope="col" style="color: white;">S. No.</th>
+																				<th scope="col" style="color: white;">Description</th>
+																				<th scope="col" style="color: white;">Part #</th>
+																				<th scope="col" style="color: white;">RFQ #</th>
+																				<th scope="col" style="color: white;">EAU</th>
+																				<th scope="col" style="color: white;">Material</th>
+																				<th scope="col" style="color: white;">Manufacturing Location</th>
+																				<th scope="col" style="color: white;">FOB Location?</th>
+																				<th scope="col" style="color: white;">Packing Requirements<br>(Returnable/Non-Returnable)</th>
+																				<th scope="col" style="color: white;">Machine Size</th>
+																				<th scope="col" style="color: white;">Cycle Time (in Sec)</th>
+																				<th scope="col" style="color: white;">Part Weight</th>
+																				<th scope="col" style="color: white;">Runner Weight</th>
+																				<th scope="col" style="color: white;">Cavities</th>
+																				<th scope="col" style="color: white;">Comments</th>
+																				<th scope="col" style="color: white;">Risk Level</th>
+																			</tr>
+																			</thead>
+																			<tbody>
+																			<tr>
+																				<td>1</td>
+																				<td>Example Description 1</td>
+																				<td>Part1</td>
+																				<td>RFQ1</td>
+																				<td>48,404</td>
+																				<td>Material1</td>
+																				<td>Location1</td>
+																				<td>Yes</td>
+																				<td>Returnable</td>
+																				<td>1100 Tonn</td>
+																				<td>60</td>
+																				<td>60</td>
+																				<td>60</td>
+																				<td>1</td>
+																				<td>-</td>
+																				<td>
+																					<select class="form-select form-select-sm">
+																						<option>Low</option>
+																						<option>Medium</option>
+																						<option>High</option>
+																					</select>
+																				</td>
+																			</tr>
+																			<!-- Add more rows as needed -->
+																			</tbody>
+																		</table>
+																	</div>
+
+																	<!-- Project Considerations Section -->
+																	<!--														<div class="section-header">-->
+																	<!--															<h5 style="background-color: #231D70 color: white; padding: 10px;">PROJECT CONSIDERATIONS</h5>-->
+																	<!--														</div>-->
+
+																	<div class="table-responsive">
+																		<table class="table table-bordered table-hover" style="min-width: 1500px;">
+																			<thead class="text-white" style="background-color: #231D70">
+																			<tr>
+																				<th scope="col" width="100" style="color: white;">S. No.</th>
+																				<th scope="col" style="color: white;">Project Consideration</th>
+																				<th scope="col" style="color: white;">Yes</th>
+																				<th scope="col" style="color: white;">No</th>
+																				<th scope="col" style="color: white;">N/A</th>
+																				<th scope="col" style="color: white;">Comments</th>
+																			</tr>
+																			</thead>
+																			<tbody>
+																			<tr>
+																				<td>1</td>
+																				<td>Is it a strategic customer?</td>
+																				<td><input type="radio" name="q1"></td>
+																				<td><input type="radio" name="q1"></td>
+																				<td><input type="radio" name="q1"></td>
+																				<td>-</td>
+																			</tr>
+																			<!-- Add more rows as needed -->
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+
+															<!-- Panel 2 -->
+															<div class="panel panel-default">
+																<div class="panel-heading" style="background-color: #231D70; color: white; padding: 10px 15px !important; margin-top: 10px;">
+
+																	<h4 class="panel-title">
+																		<a data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse2" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: white;">
+																			Contact Review Info
+																			<span class="dropdown-icon" style="margin-left: 10px;">
+				               <img style="width: 15px;height: 15px" src="assets/polygon.svg"  alt="user" />
+				            </span>
+																		</a>
+																	</h4>
+																</div>
+
+																<div id="collapse2" class="panel-collapse collapse">
+																	<form class="p-3" style="background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 8px;">
+																		<div class="row g-3">
+																			<div class="col-md-4">
+
+
+
+																				<label for="contractNumber" class="form-label fw-bold">Contract Number</label>
+
+																				<input type="text" class="form-control" id="contractNumber" placeholder="Enter contract number" style="border-radius: 5px;">
+																			</div>
+																			<div class="col-md-4">
+																				<label for="revision" class="form-label fw-bold">Revision</label>
+
+
+																				<input type="text" class="form-control" id="revision" placeholder="Enter revision" style="border-radius: 5px;">
+																			</div>
+																			<div class="col-md-4">
+																				<label for="date" class="form-label fw-bold">Date</label>
+
+																				<input
+																						placeholder="MM/DD/YYYY"
+																						type="text"
+																						class="form-control"
+																						id="date">
+
+																			</div>
+																		</div>
+																	</form>
+
+
+																</div>
+															</div>
+
+															<!-- Panel 3 -->
+															<div class="panel panel-default">
+																<div class="panel-heading" style="background-color: #231D70; color: white; padding: 10px 15px !important; margin-top: 10px;">
+
+
+																	<h4 class="panel-title">
+																		<a data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse3" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: white;">
+																			Project Estimated Timing
+																			<span class="dropdown-icon" style="margin-left: 10px;">
+				               <img style="width: 15px;height: 15px" src="assets/polygon.svg"  alt="user" />
+				            </span>
+																		</a>
+																	</h4>
+																</div>
+																<div id="collapse3" class="panel-collapse collapse">
+																	<form class="p-3" style="background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 8px;">
+																		<div class="row g-3">
+																			<div class="col-md-4">
+																				<label for="prototype" class="form-label fw-bold">Prototype Delivery Date</label>
+
+
+																				<input
+																						placeholder="MM/DD/YYYY"
+																						type="text"
+																						class="form-control"
+																						id="prototype">
+
+
+																			</div>
+																			<div class="col-md-4">
+																				<label for="designValidation" class="form-label fw-bold">Design Validation Delivery Date</label>
+																				<input
+																						placeholder="MM/DD/YYYY"
+																						type="text"
+																						class="form-control"
+																						id="designValidation">
+
+																			</div>
+																			<div class="col-md-4">
+																				<label for="productValidation" class="form-label fw-bold">Product Validation Delivery Date</label>
+																				<input
+																						placeholder="MM/DD/YYYY"
+																						type="text"
+																						class="form-control"
+																						id="productValidation">
+
+																			</div>
+																		</div>
+																	</form>
+
+																</div>
+															</div>
+
+															<div class="panel panel-default">
+																<div class="panel-heading" style="background-color: #231D70; color: white; padding: 10px 15px !important; margin-top: 10px;">
+
+
+																	<h4 class="panel-title">
+																		<a data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse4" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: white;">
+																			Project Consideration
+																			<span class="dropdown-icon" style="margin-left: 10px;">
+				              <img style="width: 15px;height: 15px" src="assets/polygon.svg"  alt="user" />
+				            </span>
+																		</a>
+																	</h4>
+																</div>
+																<div id="collapse4" class="panel-collapse collapse" >
+
+
+																	<div class="table-responsive">
+																		<table class="table table-bordered table-hover mt-2" style="min-width: 1500px;border: 1px;">
+																			<thead>
+																			<tr>
+																				<th style="width: 20%;">Approved By</th>
+																				<th style="width: 30%;">Department</th>
+																				<th style="width: 10%;">:</th>
+																				<th style="width: 20%;">Date</th>
+																				<th style="width: 20%;">Note</th>
+																			</tr>
+																			</thead>
+																			<tbody>
+																			<tr>
+																				<td>Approved By</td>
+																				<td>Program Manager</td>
+																				<td>:</td>
+																				<td>
+																					<input type="date" class="form-control">
+																				</td>
+																				<td>
+																					<input type="text" class="form-control" placeholder="Note">
+																				</td>
+																			</tr>
+																			<tr>
+																				<td>Approved By</td>
+																				<td>Engineering</td>
+																				<td>:</td>
+																				<td>
+																					<input type="date" class="form-control">
+																				</td>
+																				<td>
+																					<input type="text" class="form-control" placeholder="Note">
+																				</td>
+																			</tr>
+																			<tr>
+																				<td>Approved By</td>
+																				<td>Quality</td>
+																				<td>:</td>
+																				<td>
+																					<input type="date" class="form-control">
+																				</td>
+																				<td>
+																					<input type="text" class="form-control" placeholder="Note">
+																				</td>
+																			</tr>
+																			<tr>
+																				<td>Approved By</td>
+																				<td>Materials</td>
+																				<td>:</td>
+																				<td>
+																					<input type="date" class="form-control">
+																				</td>
+																				<td>
+																					<input type="text" class="form-control" placeholder="Note">
+																				</td>
+																			</tr>
+																			<tr>
+																				<td>Approved By</td>
+																				<td>Plant Manager</td>
+																				<td>:</td>
+																				<td>
+																					<input type="date" class="form-control">
+																				</td>
+																				<td>
+																					<input type="text" class="form-control" placeholder="Note">
+																				</td>
+																			</tr>
+																			</tbody>
+																		</table>
+																	</div>
+
+
+																</div>
+															</div>
+														</div>
+
+
+													</div>
+													<div class="nt_quote_tab-pane" id="cost_overview">
+														<h3>Cost Overview</h3>
+														<p>This is the content for the Cost Overview tab.</p>
+													</div>
+													<div class="nt_quote_tab-pane" id="cost_cover">
+														<h3>Cost Cover</h3>
+														<p>This is the content for the Cost Cover tab.</p>
+													</div>
+													<div class="nt_quote_tab-pane" id="customer_po">
+														<h3>Customer PO</h3>
+														<p>This is the content for the Customer PO.</p>
+													</div>
+													<div class="nt_quote_tab-pane" id="vendor_quote">
+														<h3>Vendor Quote </h3>
+														<p>This is the content for the Vendor Quote tab.</p>
+													</div>
+													<div class="nt_quote_tab-pane" id="vendor_po">
+														<h3>Vendor PO</h3>
+														<p>This is the content for the Vendor PO.</p>
+													</div>
+
+												</div>
+
+
+
+
+											</div>
+											<div class="tab-pane" id="nt-quote2">
+												<h3>Just for test Content</h3>
+												<p>This is the content for the NT Quote tab.</p>
+											</div>
+											<div class="tab-pane" id="vendor">
+												<h3>Vendor Content</h3>
+												<p>This is the content for the Vendor tab.</p>
+											</div>
+											<div class="tab-pane" id="logout">
+												<h3>Logout</h3>
+												<p>You have been logged out.</p>
+											</div>
+										</div>
+
+
+
+									</div>
+
+				<!--		Update Status Modal Start			-->
+									<div class="modal fade" id="update_status_modal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content" style="position: relative;">
+
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 15px; right: 15px; z-index: 999999"></button>
+
+
+
+												<div class="modal-body d-flex justify-content-center align-items-center" style="height: 190px;">
+													<p class="text-center" style="margin-bottom: 0; font-size: 17px;"><b style="color: #D40066">Status Update Sucessfully</b> </p>
+												</div>
+
+
+
+											</div>
+										</div>
+									</div>
+									<!--		Update Status Modal End			-->
+
+									<!--end::Content container-->
+								</div>
+								<!--end::Content-->
+							</div>
+							<!--end::Content wrapper-->
+							<!--begin::Footer-->
+
+							<!--end::Footer-->
+						</div>
+						<!--end:::Main-->
+				
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Calculation Input Data using Tabulator-->
+<script>
+		let table;
+		$(document).ready(function () {
+		    const urlParams = new URLSearchParams(window.location.search);
+		    const id = urlParams.get("id");
+
+		    if (!id) {
+		        alert("Missing ID in the URL!");
+		        return;
+		    }
+
+		    table = new Tabulator("#calculationInputData", {
+		        layout: "fitColumns",
+		        responsiveLayout: "collapse",
+		        autoResize: true,
+		        rowHeight: 50,
+				columns: [
+							{ title: "ID", field: "id", hozAlign: "center", width: 100, visible: false},
+
+						        { title: "Sr No.", field: "srNo", hozAlign: "center", width: 100, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+						        { title: "Description", field: "materialDescription", width: 260, 
+						          formatter: function(cell) { return `<div style="background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+						        { title: "Part Number", field: "partNumber", width: 200, 
+						          formatter: function(cell) { return `<div style="background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+						        { title: "Material", field: "material", width: 200, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+						        { title: "Supplier", field: "supplier", editor: "input", width: 218 , // Editable field
+							      formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+						        { title: "Estimated Annual<br> Volume", field: "estAnnualVolume", hozAlign: "right", width: 200, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+						        { title: "Estimated Production<br> Runs per Year", field: "estProductionRunYrs", editor: "number", hozAlign: "right", width: 180 , // Editable field
+								  formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+								
+						        { title: "Material Cost ($/Lb)", field: "materialCostLb", editor: "number", hozAlign: "right", width: 180 , // Editable field
+								  formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+								
+						        { title: "Part Weight (Lb)", field: "partWeightLb", hozAlign: "right", width: 180, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+						        { title: "Runner Weight (Lb)", field: "runnerWeightLb", hozAlign: "right", width: 200, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+						        { title: "Machine Size", field: "machineSize", width: 180, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;text-align:center;background-color: #DCDCDC; padding: 10px;">${cell.getValue()}</div>`; } },
+
+						        { title: "Machine Rate", field: "machineRate", editor: "number", hozAlign: "right", width: 180,  // Editable field
+								  formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+						        { title: "Scrap Rate", field: "scrapRate", hozAlign: "right", width: 180, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+						        { title: "Machine Efficiency", field: "machineEfficiency", hozAlign: "right", width: 200, 
+						          formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+						        { title: "# FTE", field: "fte", hozAlign: "right", width: 120, 
+						           formatter: function(cell) { return `<div style="font-size: 15px; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+								  
+								{ title: "Labor Rate", field: "laborRate", hozAlign: "right", width: 120, 
+								  formatter: function(cell) { return `<div style="text-align:center;background-color: #DCDCDC; padding: 10px;font-size: 15px;">${cell.getValue()}</div>`; } },
+								  
+								{ title: "Number of Cavities", field: "numberOfCavities", hozAlign: "right", width: 170, 
+								  formatter: function(cell) { return `<div style="text-align:center;background-color: #DCDCDC; padding: 10px;font-size: 15px;">${cell.getValue()}</div>`; } },
+								  
+								{ title: "Cycle Time <br> (In Seconds)", field: "numberOfCavities", hozAlign: "right", width: 120, 
+								  formatter: function(cell) { return `<div style="text-align:center;background-color: #DCDCDC; padding: 10px;font-size: 15px;">${cell.getValue()}</div>`; } },
+													  
+								{ title: "Purchased Components <br>Cost Per Part", field: "purchaseComponentCostPart", editor: "number", hozAlign: "right", width: 200, 
+								            formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+								          { title: "Description of Secondary <br>Operation and or<br> External Process", field: "secondaryOperationExternalProcess", editor: "input", width: 240, 
+								            formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+								          { title: "Secondary Operation Labor<br> Rate per hour", field: "secondaryOperationLaborRate", editor: "number", hozAlign: "right", width: 200, 
+								            formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+								          { title: "Secondary Operation <br>Machine Rate per hour", field: "secondaryOperationMachineRate", hozAlign: "right", width: 200, 
+								            formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+								          { title: "Secondary Operation<br> Cycle Time (Second)", field: "secondaryOperationCycleTime", hozAlign: "right", width: 220, 
+								            formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+								          { title: "External Operations <br>Rate Per Part", field: "externalOperationRate", editor: "number", hozAlign: "right", width: 200, 
+								             formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+								          { title: "Preventative Maintenance<br> Frequency", field: "preventativeMaintenanceFrequency", width: 200, 
+								             formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px;text-align:center;">${cell.getValue()}</div>`; } },
+
+								          { title: "Preventative Maintenance <br> Cost", field: "preventativeMaintenanceCost", editor: "number", hozAlign: "right", width: 220, 
+								             formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+								          { title: "Target Profit", field: "targetProfit", hozAlign: "right", width: 180, 
+								             formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+								          { title: "Target Material Markup <br>(leave blank if 0 markup)", field: "targetMaterialMarkup", editor: "number", hozAlign: "right", width: 200, 
+								            formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+
+								          { title: "Actual Material Cost", field: "actualMaterialCost", editor: "number", hozAlign: "right", width: 250, 
+								             formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } },
+								      ]
+		    });
+
+		    // Listen for edits in the table
+		    table.on("cellEdited", function (cell) {
+		        let row = cell.getRow().getData();
+		        console.log("Cell Edited:", cell.getField(), "New Value:", cell.getValue());
+		        saveEditedRow(row);
+		    });
+
+		    $.ajax({
+		        url: `/rev-aux/api/nt-quote-customer-input-output-masters/getCalculationInputOutputData/${id}`,
+		        type: "GET",
+		        beforeSend: function (request) {
+		            const token = localStorage.getItem("token");
+		            request.setRequestHeader("Authorization", token);
+		        },
+		        success: function (response) {
+		            console.log("Data received:", response);
+		            table.setData(Array.isArray(response) ? response : [response]);
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("Error fetching Input details:", error);
+		        }
+		    });
+		});
+
+		function saveEditedRow(row) {
+		    console.log("Saving row:", row);
+		    $.ajax({
+		        url: `/rev-aux/api/nt-quote-customer-input-output-masters/saveCalculationInputOutputData/${row.id}`,
+		        type: "PUT",
+		        contentType: "application/json",
+		        data: JSON.stringify(row),
+		        beforeSend: function (request) {
+		            const token = localStorage.getItem("token");
+		            request.setRequestHeader("Authorization", token);
+		        },
+		        success: function (response) {
+		            console.log(`Data for ID ${row.id} saved successfully!`, response);
+		        },
+		        error: function (xhr, status, error) {
+		            console.error(`Error saving data for ID ${row.id}:`, error);
+		        }
+		    });
+		}
+
+	</script>
+
+<!--Calculation Output Data Feb 3 -->
+	<script>
+		let table2;
+
+		  $(document).ready(function () {
+		      // Extract query parameters from the URL
+		      const urlParams = new URLSearchParams(window.location.search);
+		      const id = urlParams.get('id'); // Get the ID from the URL
+
+		      if (!id) {
+		          alert("Missing ID in the URL!");
+		          return;
+		      }
+
+		      table2 = new Tabulator("#calculationOutputData", {
+			       layout: "fitColumns",
+			       responsiveLayout: "collapse",
+			       autoResize: true,
+			       rowHeight: 50,  // Increased row height
+			       headerVertical: true,  // Allow header text wrapping
+			       columns: [
+				   { title: "Id", field: "id", hozAlign: "center", width: 100, visible: false},    
+				   { title: "Sr No.", field: "srNo", hozAlign: "center", width: 100, 
+			             formatter: function(cell) { return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; } 
+			           },
+
+			           { title: "Part Name", field: "materialDescription", width: 260, 
+			             formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; } 
+			           },
+
+			           { title: "Part Number", field: "partNumber", width: 200, 
+			             formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; } 
+			           },
+
+					   { 
+					       title: "Parts Per Hour", 
+					       field: "partPerHours", 
+					       width: 200, 
+					       mutator: function(value, data) { 
+					           // Extract values from row data
+					           let cycleTime = parseFloat(data.cycleTime) || 1; // Prevent division by zero
+					           let machineEfficiency = parseFloat(data.machineEfficiency) || 0;
+					           let numberOfCavities = parseFloat(data.numberOfCavities) || 0;
+
+					           // Apply formula: (3600 / Cycle Time) * Machine Efficiency * # of Cavities
+					           return ((3600 / cycleTime) * machineEfficiency * numberOfCavities).toFixed(2);
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+
+					   { 
+					       title: "Estimated Lot Size", 
+					       field: "estLotSize", 
+					       width: 218, 
+					       mutator: function(value, data) { 
+					           // Extract values from row data
+					           let estAnnualVolume = parseFloat(data.estAnnualVolume) || 0;
+					           let estProductionRunYrs = parseFloat(data.estProductionRunYrs) || 1; // Prevent division by zero
+
+					           // Apply formula: Estimated Lot Size = Estimated Annual Volume / Estimated Runs Per Year
+					           return (estAnnualVolume / estProductionRunYrs).toFixed(2);
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+
+			           { title: "Setup Hours", field: "setupHours", hozAlign: "right", width: 200, 
+			             formatter: function(cell) { return `<div style="font-size: 15px;background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; } 
+			           },
+
+					   
+					   { 
+					       title: "Setup Cost <br>Per Part", 
+					       field: "setupCost", 
+					       hozAlign: "right", 
+					       width: 180, 
+						   mutator: function(value, data) { 
+						       console.log("Row Data:", data);  // Log entire row data
+						       
+						       let extendedMaterialCostPer = parseFloat(data.extendedMaterialCostPer) || 0;
+						       let partPerHours = parseFloat(data.partPerHours) || 0;
+						       let machineRate = parseFloat(data.machineRate) || 0;
+						       let setupHours = parseFloat(data.setupHours) || 0;
+						       let estProductionRunYrs = parseFloat(data.estProductionRunYrs) || 0;
+						       let estAnnualVolume = parseFloat(data.estAnnualVolume) || 1; // Prevent division by zero
+
+							   //console.log(`estAnnualVolume: ${estAnnualVolume}`);
+
+						       let setupCost = (((extendedMaterialCostPer * partPerHours * 0.5) + 
+						                         (machineRate * setupHours) + 
+						                         (25 * setupHours)) * 
+						                         estProductionRunYrs / estAnnualVolume);
+
+						       console.log(`Computed Setup Cost: ${setupCost}`);
+
+						       return setupCost.toFixed(2);
+						   },
+
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+
+					   { 
+					       title: "Preventive Maintenance<br> Costs", 
+					       field: "preventativeMaintenanceCost", 
+					       hozAlign: "right", 
+					       width: 200, 
+					       mutator: function(value, data) { 
+					           // Extract values from row data and ensure numeric conversion
+					           let preventativeMaintenanceFrequency = parseFloat(data.preventativeMaintenanceFrequency) || 0;
+					           let preventativeMaintenanceCost = parseFloat(data.preventativeMaintenanceCost) || 0;
+					           let estAnnualVolume = parseFloat(data.estAnnualVolume) || 1; // Prevent division by zero
+
+					           // Apply formula
+					           let result = (preventativeMaintenanceCost * preventativeMaintenanceFrequency) / estAnnualVolume;
+
+					           // Ensure the result is an integer before sending it to the backend
+					           return Math.round(result); // Convert decimal to the nearest integer
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+
+					   { 
+					       title: "Secondary Operation and<br> External Process", 
+					       field: "secondaryOperationExternalProcess", 
+					       hozAlign: "right", 
+					       width: 200, 
+					       mutator: function(value, data) { 
+					           // Extract values from row data
+					           let secondaryOperationLaborRate = parseFloat(data.secondaryOperationLaborRate) || 0;
+					           let secondaryOperationMachineRate = parseFloat(data.secondaryOperationMachineRate) || 0;
+					           let secondaryOperationCycleTime = parseFloat(data.secondaryOperationCycleTime) || 0;
+
+					           // Apply formula: (((secondaryOperationLaborRate + secondaryOperationMachineRate) * secondaryOperationCycleTime) / 60 / 60)
+					           let result = (((secondaryOperationLaborRate + secondaryOperationMachineRate) * secondaryOperationCycleTime) / 60 / 60);
+
+					           return result.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   
+					   { 
+					       title: "External Operation <br>Cost per part", 
+					       field: "externalOperationCostPer", 
+					       hozAlign: "right", 
+					       width: 200, 
+					       mutator: function(value, data) { 
+					           // Extract value from row data
+					           let externalOperationRate = parseFloat(data.externalOperationRate) || 0;
+
+					           // Apply formula: externalOperationRate
+					           return externalOperationRate.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+								
+					   { 
+					       title: "Extended Machine<br> Cost per part", 
+					       field: "extendedMachineCostPerPart", 
+					       hozAlign: "right", 
+					       width: 200, 
+					       mutator: function(value, data) { 
+					           // Extract values from row data
+					           let machineRate = parseFloat(data.machineRate) || 0;
+					           let partPerHours = parseFloat(data.partPerHours) || 1; // Prevent division by zero
+
+					           // Apply formula: (machineRate * (1 / partPerHours))
+					           let extendedMachineCostPerPart = (machineRate * (1 / partPerHours));
+
+					           return extendedMachineCostPerPart.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+											   	   				   
+					   
+					   { 
+					       title: "Extended Labor <br>Cost per part", 
+					       field: "extendedLaborCostPer", 
+					       hozAlign: "right", 
+					       width: 200, 
+					       mutator: function(value, data) { 
+					           // Extract values from row data
+					           let laborRate = parseFloat(data.laborRate) || 0;
+					           let partPerHours = parseFloat(data.partPerHours) || 1; // Prevent division by zero
+
+					           // Apply formula: (laborRate * (1 / partPerHours))
+					           let extendedLaborCostPer = (laborRate * (1 / partPerHours));
+
+					           return extendedLaborCostPer.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; padding: 10px; text-align:center;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   										   	   				   
+					   { 
+					       title: "Extended Materials <br>Cost per part <br>including overhead", 
+					       field: "extendedMaterialCostPer",  
+					       hozAlign: "right", 
+					       width: 150, 
+					       mutator: function(value, data) { 
+					           // Extract values from row data
+					           let materialCostLb = parseFloat(data.materialCostLb) || 0;
+					           let partWeightLb = parseFloat(data.partWeightLb) || 0;
+					           let runnerWeightLb = parseFloat(data.runnerWeightLb) || 0;
+
+					           // Apply formula: materialCostLb * (partWeightLb + runnerWeightLb)
+					           let extendedMaterialCostPer = materialCostLb * (partWeightLb + runnerWeightLb);
+
+					           return extendedMaterialCostPer.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+																									   					   
+					   
+					   { 
+					       title: "Purchased Component Cost", 
+					       field: "purchaseComponentCostPart",  
+					       hozAlign: "right", 
+					       width: 150, 
+					       mutator: function(value, data) { 
+					           // Extract value from row data
+					           let purchaseComponentCostPart = parseFloat(data.purchaseComponentCostPart) || 0;
+
+					           // Return value rounded to 2 decimal places
+					           return purchaseComponentCostPart.toFixed(2);
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   				   
+			           { title: "Pack. & Logistics<br> Cost Per Part", field: "packLogisticCostPer", editor: "number", hozAlign: "right", width: 150, 
+			             formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } 
+			           },
+
+					   { 
+					       title: "Total Production Cost", 
+					       field: "totalProductionCost",  
+					       hozAlign: "right", 
+					       width: 150, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let setupCost = parseFloat(data.setupCost) || 0;
+					           let preventativeMaintenanceCost = parseFloat(data.preventativeMaintenanceCost) || 0;
+					           let secondaryOperationExternalProcess = parseFloat(data.secondaryOperationExternalProcess) || 0;
+					           let externalOperationCostPer = parseFloat(data.externalOperationCostPer) || 0;
+					           let extendedMachineCostPerPart = parseFloat(data.extendedMachineCostPerPart) || 0;
+					           let extendedLaborCostPer = parseFloat(data.extendedLaborCostPer) || 0;
+
+					           // Apply formula: Sum of all extracted values
+					           let totalProductionCost = setupCost + preventativeMaintenanceCost + 
+					                                     secondaryOperationExternalProcess + externalOperationCostPer + 
+					                                     extendedMachineCostPerPart + extendedLaborCostPer;
+
+					           return totalProductionCost.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   
+					   { 
+					       title: "Total Material <br>Cost including <br>purchased components", 
+					       field: "totalMaterialCost",  
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let extendedMaterialCostPer = parseFloat(data.extendedMaterialCostPer) || 0;
+					           let purchaseComponentCostPart = parseFloat(data.purchaseComponentCostPart) || 0;
+
+					           // Apply formula: extendedMaterialCostPer + purchaseComponentCostPart
+					           let totalMaterialCost = extendedMaterialCostPer + purchaseComponentCostPart;
+
+					           return totalMaterialCost.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+										
+					   { 
+					       title: "Total Cost Prior <br>to SG&A & Profit", 
+					       field: "totalCostSgaProfit", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let totalProductionCost = parseFloat(data.totalProductionCost) || 0;
+					           let totalMaterialCost = parseFloat(data.totalMaterialCost) || 0;
+					           let packLogisticCostPer = parseFloat(data.packLogisticCostPer) || 0;
+					           let scrapRate = parseFloat(data.scrapRate) || 0;
+
+					           // Apply formula: ((totalProductionCost + totalMaterialCost + packLogisticCostPer) * (1 + scrapRate))
+					           let totalCostSgaProfit = (totalProductionCost + totalMaterialCost + packLogisticCostPer) * (1 + scrapRate);
+
+					           return totalCostSgaProfit.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+										   
+					  
+																						   								   
+			           { title: "SG&A % Rate", field: "sgaRate", editor: "number", hozAlign: "right", width: 250, 
+			             formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } 
+			           },
+
+					   { 
+					       title: "SG&A $", 
+					       field: "sgaCost", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let totalCostSgaProfit = parseFloat(data.totalCostSgaProfit) || 0;
+					           let sgaRate = parseFloat(data.sgaRate) || 0;
+
+					           // Apply formula: totalCostSgaProfit * sgaRate
+					           let sgaCost = totalCostSgaProfit * sgaRate;
+
+					           return sgaCost.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+						
+					   { 
+					       title: "Profit $", 
+					       field: "profit", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let targetProfit = parseFloat(data.targetProfit) || 0;
+					           let totalCostSgaProfit = parseFloat(data.totalCostSgaProfit) || 0;
+
+					           // Apply formula: targetProfit * totalCostSgaProfit
+					           let profit = targetProfit * totalCostSgaProfit;
+
+					           return profit.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   
+					   { 
+					       title: "Part Price", 
+					       field: "partPrice", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let totalCostSgaProfit = parseFloat(data.totalCostSgaProfit) || 0;
+					           let sgaCost = parseFloat(data.sgaCost) || 0;
+					           let profit = parseFloat(data.profit) || 0;
+
+					           // Apply formula: totalCostSgaProfit + sgaCost + profit
+					           let partPrice = totalCostSgaProfit + sgaCost + profit;
+
+					           return partPrice.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   { 
+					       title: "Total Cost", 
+					       field: "totalCost", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let totalMaterialCost = parseFloat(data.totalMaterialCost) || 0;
+					           let totalProductionCost = parseFloat(data.totalProductionCost) || 0;
+					           let packLogisticCostPer = parseFloat(data.packLogisticCostPer) || 0;
+					           let estAnnualVolume = parseFloat(data.estAnnualVolume) || 1; // Prevent division by zero
+
+					           // Apply formula: (totalMaterialCost + totalProductionCost + packLogisticCostPer) * estAnnualVolume
+					           let totalCost = (totalMaterialCost + totalProductionCost + packLogisticCostPer) * estAnnualVolume;
+
+					           return totalCost.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   { 
+					       title: "Total Sales", 
+					       field: "totalSales",  
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let partPrice = parseFloat(data.partPrice) || 0;
+					           let estAnnualVolume = parseFloat(data.estAnnualVolume) || 1; // Prevent division by zero
+
+					           // Apply formula: partPrice * estAnnualVolume
+					           let totalSales = partPrice * estAnnualVolume;
+
+					           return totalSales.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   { 
+					       title: "Total Profit", 
+					       field: "totalProfit", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let totalSales = parseFloat(data.totalSales) || 0;
+					           let totalCost = parseFloat(data.totalCost) || 0;
+
+					           // Apply formula: totalSales - totalCost
+					           let totalProfit = totalSales - totalCost;
+
+					           return totalProfit.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   
+					   { 
+					       title: "% Cost Material", 
+					       field: "costMaterial", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let extendedMaterialCostPer = parseFloat(data.extendedMaterialCostPer) || 0;
+					           let partPrice = parseFloat(data.partPrice) || 1; // Prevent division by zero
+
+					           // Apply formula: extendedMaterialCostPer / partPrice
+					           let costMaterial = extendedMaterialCostPer / partPrice;
+
+					           return (costMaterial * 100).toFixed(2); // Calculate percentage and round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; background-color: #DCDCDC; text-align:center; padding: 10px;">${cell.getValue()}%</div>`; 
+					       } 
+					   },
+
+					   { 
+					       title: "Total Contribution<br> Margin $", 
+					       field: "totalContributionMargin",  
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let sgaCost = parseFloat(data.sgaCost) || 0;
+					           let profit = parseFloat(data.profit) || 0;
+					           let materialContributionMargin = parseFloat(data.materialContributionMargin) || 0;
+					           let estAnnualVolume = parseFloat(data.estAnnualVolume) || 1; // Prevent division by zero
+
+					           // Apply formula: (sgaCost + profit + materialContributionMargin) * estAnnualVolume
+					           let totalContributionMargin = (sgaCost + profit + materialContributionMargin) * estAnnualVolume;
+
+					           return totalContributionMargin.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; text-align:center; background-color: #DCDCDC; padding: 10px;">$${cell.getValue()}</div>`; 
+					       } 
+					   },
+
+					   { 
+					       title: "Contribution Margin %", 
+					       field: "contributionMargin", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let sgaCost = parseFloat(data.sgaCost) || 0;
+					           let profit = parseFloat(data.profit) || 0;
+					           let materialContributionMargin = parseFloat(data.materialContributionMargin) || 0;
+					           let partPrice = parseFloat(data.partPrice) || 1; // Prevent division by zero
+
+					           // Apply formula: ((sgaCost + profit + materialContributionMargin) / partPrice)
+					           let contributionMargin = ((sgaCost + profit + materialContributionMargin) / partPrice) * 100; // Multiply by 100 for percentage
+
+					           return contributionMargin.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px; text-align:center; background-color: #DCDCDC; padding: 10px;">${cell.getValue()}%</div>`; 
+					       } 
+					   },
+
+					   { 
+					       title: "Material Contribution<br> Margin ($)", 
+					       field: "materialContributionMargin", 
+					       hozAlign: "right", 
+					       width: 250, 
+					       mutator: function(value, data) { 
+					           // Extract required values from row data
+					           let actualMaterialCost = parseFloat(data.actualMaterialCost) || 0;
+					           let targetMaterialMarkup = parseFloat(data.targetMaterialMarkup) || 0;
+					           let partWeightLb = parseFloat(data.partWeightLb) || 0;
+					           let runnerWeightLb = parseFloat(data.runnerWeightLb) || 0;
+
+					           // Apply formula: (actualMaterialCost * targetMaterialMarkup) * (partWeightLb + runnerWeightLb)
+					           let materialContributionMargin = (actualMaterialCost * targetMaterialMarkup) * (partWeightLb + runnerWeightLb);
+
+					           return materialContributionMargin.toFixed(2); // Round to 2 decimal places
+					       },
+					       formatter: function(cell) { 
+					           return `<div style="font-size: 15px;text-align:center; background-color: #DCDCDC;padding: 10px;">${cell.getValue()}</div>`; 
+					       } 
+					   },
+																																																																										   
+																																																											      
+			           { title: "Comments", field: "comments", editor: "input", hozAlign: "right", width: 250, 
+			             formatter: function(cell) { return `<div style="font-size: 15px;text-align:center; padding: 10px;">${cell.getValue()}</div>`; } 
+			           }
+			       ]
+			   });
+
+
+
+	            // Fetch Data from API and Load into Tabulator
+	            $.ajax({
+	                url: `/rev-aux/api/nt-quote-customer-input-output-masters/getCalculationInputOutputData/${id}`,
+	                type: 'GET',
+	                beforeSend: function (request) {
+	                    const token = localStorage.getItem('token');
+	                    request.setRequestHeader("Authorization", token);
+	                    console.log("Authorization Token:", localStorage.getItem('token'));
+	                },
+	                success: function (response) {
+					//	alert("response = " + response);
+	                    console.log("Data received using Tabulator:", response);
+						table2.setData(Array.isArray(response) ? response : [response]); 
+	                },
+	                error: function (xhr, status, error) {
+	                    console.error('Error fetching details:', error);
+	                }
+	            });
+				
+				
+			  // Listen for edits in the table
+			    table2.on("cellEdited", function (cell) {
+			        let row = cell.getRow().getData();
+			        console.log("Cell Edited:", cell.getField(), "New Value:", cell.getValue());
+			        saveEditedRow(row);
+			    });
+
+			    function saveEditedRow(row) {
+			        console.log("Saving row:", row);
+			        $.ajax({
+			            url: `/rev-aux/api/nt-quote-customer-input-output-masters/saveCalculationInputOutputData/${row.id}`,
+			            type: "PUT",
+			            contentType: "application/json",
+			            data: JSON.stringify(row),
+			            beforeSend: function (request) {
+			                const token = localStorage.getItem("token");
+			                request.setRequestHeader("Authorization", token);
+			            },
+			            success: function (response) {
+			                console.log(`Data for ID ${row.id} saved successfully!`, response);
+			            },
+			            error: function (xhr, status, error) {
+			                console.error(`Error saving data for ID ${row.id}:`, error);
+			            }
+			        });
+			    }
+			});
+
+					
+	   </script>
+
+
+	   <div th:fragment="scripts">
+	   <script th:src="@{/assets/js/fragment.js}"></script>
+
+	   <!--begin::Javascript-->
+	   <script>var hostUrl = "assets/";</script>
+	   <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+	   <script th:src="@{/assets/plugins/global/plugins.bundle.js}"></script>
+	   <script th:src="@{/assets/js/scripts.bundle.js}"></script>
+	   <!--end::Global Javascript Bundle-->
+	   <!--begin::Vendors Javascript(used for this page only)-->
+	   <script th:src="@{/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js}"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+	   <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+	  <script th:src="@{/assets/plugins/custom/datatables/datatables.bundle.js}"></script>
+	   <!--end::Vendors Javascript-->
+	   <!--begin::Custom Javascript(used for this page only)-->
+
+	   <script th:src="@{/assets/js/widgets.bundle.js}"></script>
+	   <script th:src="@{/assets/js/custom/widgets.js}"></script>
+	   <script th:src="@{/assets/js/custom/apps/chat/chat.js}"></script>
+	   <script th:src="@{/assets/js/custom/utilities/modals/upgrade-plan.js}"></script>
+	   <script th:src="@{/assets/js/custom/utilities/modals/create-app.js}"></script>
+	   <script th:src="@{/assets/js/custom/utilities/modals/new-target.js}"></script>
+	   <script th:src="@{/assets/js/custom/utilities/modals/users-search.js}"></script>
+	   </div>
+<!-- Include the Footer & Scripts (Also closes open divs) -->
+<div th:replace="~{Fragments/after_main :: scripts}"></div>
+
+</body>
+
+</html>

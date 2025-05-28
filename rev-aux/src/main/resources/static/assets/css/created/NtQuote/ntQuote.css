@@ -1,0 +1,29 @@
+.dt-search{
+				display: none;
+			}
+			
+			#ntQuotesTable thead {
+				    border: 1px solid #241D75;  /* Change color as needed */
+				}
+			
+				#ntQuotesTable thead  tr{
+							    border: 1px solid #DCDCDC;  /* Change color as needed */
+							}
+				
+			#ntQuotesTable tbody {
+			    border: 1px solid #DCDCDC;  /* Change color as needed */
+			}
+
+			#ntQuotesTable tbody tr {
+			    border-bottom: 1px solid #DCDCDC;  /* Add borders to each row */
+			}
+
+			#ntQuotesTable tbody td {
+			    border-right: 1px solid #DCDCDC;  /* Add borders to each cell */
+			}
+			
+			#ntSearch{
+							border:none;
+							width:550px;
+							font-size: 15px;
+						}

@@ -1,0 +1,377 @@
+body{
+			font-family: Lato!important;
+			background: #F5F5F5!important;;
+
+		}
+		.nav-link.active {
+			position: relative;
+			background-color: white; /* Highlight the active pill with white background */
+			color: #000; /* Change text color to ensure good contrast */
+			border-radius: 5px; /* Optional: add a slight border-radius for better appearance */
+		}
+
+		.nav-link.active::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 4px;
+			background-color: #231D70; /* Bottom line color */
+		}
+
+
+		thead th {
+			color: white;
+			font-size: 1.1rem; /* Increase font size */
+			text-align: center; /* Center-align text */
+		}
+
+
+		 .tab-pane {
+			 display: none;
+		 }
+
+		.tab-pane.active {
+			display: block;
+		}
+
+		#search-wrapper{
+			display: flex;
+			border: 1px solid rgba(0, 0, 0, 0.276);
+			align-items: stretch;
+			border-radius: 50px;
+			background-color: #fff;
+			padding: 7px;
+			overflow: hidden;
+			max-width: 500px;
+			box-shadow: 2px 1px 5px 1px rgba(0, 0, 0, 0.273);
+
+		}
+
+		#search-wrapper2{
+			display: flex;
+			border: 1px solid rgba(0, 0, 0, 0.276);
+			align-items: stretch;
+			border-radius: 20px;
+			background-color: #fff;
+			padding: 3px;
+			overflow: hidden;
+			max-width: 650px;
+			box-shadow: 2px 1px 5px 1px rgba(0, 0, 0, 0.273);
+
+		}
+
+		#search2{
+			border:none;
+			width:550px;
+			font-size: 15px;
+		}
+
+		#search{
+			border:none;
+			width:550px;
+			font-size: 15px;
+		}
+		#search:focus{
+			outline: none;
+		}
+		.search-icon{
+			margin: 10px;
+			color:rgba(0, 0, 0, 0.564);
+		}
+		#search-button{
+			border:none;
+			cursor: pointer;
+			color:#fff;
+			background-color:#1dbf73;
+			padding:0px 10px;
+		}
+
+		/*.menu-item.active {*/
+		/*	background-color: #231D70; !* Active background color *!*/
+		/*}*/
+
+		.menu-link.nav-item.active {
+			background: #231D70!important; /* Active background color */
+			color: white; /* Optional: Set the text color */
+		}
+
+		.sub-menu-link.sub-nav-item.active {
+			padding: 5px;
+
+			background: #231D70!important; /* Active background color */
+			color: white; /* Optional: Set the text color */
+			border-radius: 10px; /* Adjust the value to control the roundness */
+		}
+
+
+		.menu-item.active {
+			background: #231D70 !important; /* Active background color for parent menu */
+			color: white !important; /* Active text color */
+		}
+
+
+		.menu-sub .menu-item.active {
+
+			background: #3A327B !important; /* Active background color for submenu */
+			color: white !important; /* Active text color for submenu */
+		}
+
+
+		.menu-item.active .menu-title {
+			color: white; /* Active text color */
+		}
+
+		.menu-item.active .menu-icon img {
+			display: inline-block;
+		}
+
+		.menu-item .menu-title {
+			color: inherit; /* Reset color for non-selected menu items */
+		}
+
+		.menu-sub .menu-item .menu-title {
+			color: inherit; /* Reset color for child menu items */
+		}
+
+
+		.admin_section_tab-pane {
+			display: none;
+		}
+
+
+
+		.admin_section_tab-pane.active {
+			display: block;
+		}
+
+		.procurement-rfq_tab-pane {
+			display: none;
+		}
+
+
+
+		.procurement-rfq_tab-pane.active {
+			display: block;
+		}
+
+.nt_quote_tab-pane {
+			display: none;
+		}
+
+
+
+		.nt_quote_tab-pane.active {
+			display: block;
+		}
+
+
+
+
+		.nav-link.active {
+			position: relative;
+			background-color: white; /* Highlight the active pill with white background */
+			color: #000; /* Change text color to ensure good contrast */
+			border-radius: 5px; /* Optional: add a slight border-radius for better appearance */
+		}
+
+		.nav-link.active::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 4px;
+			background-color: #231D70; /* Bottom line color */
+		}
+
+
+		thead th {
+			color: white;
+			font-size: 1.1rem; /* Increase font size */
+			text-align: center; /* Center-align text */
+		}
+
+		.section-title {
+			font-weight: bold;
+			color: #d63384;
+			margin-bottom: 10px;
+		}
+		.bordered-box {
+			border: 1px solid #dee2e6;
+			padding: 20px;
+			border-radius: 8px;
+			background-color: #f8f9fa;
+		}
+
+		.square {
+			width: 40px;
+			height: 20px;
+			display: inline-block;
+			margin: 0 auto;
+			border: 1px solid #ccc;
+		}
+		.square-green {
+			background-color: green;
+		}
+		.square-yellow {
+			background-color: yellow;
+		}
+		.square-red {
+			background-color: red;
+		}
+		.label-container {
+			text-align: center;
+		}
+
+
+		@media screen and (max-width: 768px) {
+
+			.card-custom {
+
+				padding: 10px!important;
+
+
+			}
+			.new_up_test {
+
+				padding: 10px!important;
+
+
+			}
+
+			.rfq-info
+			{
+				margin-left: 0px!important;
+				margin-top: 20px;
+			}
+
+
+
+			#procurement_rfq_submitted_rfq_button {
+				width: 100px!important;
+			}
+
+			#procurement_rfq_active_rfq_button {
+				width: 100px!important;
+			}
+
+			#role-select {
+				margin-left: 0 !important;
+			}
+		}
+
+		.table-header {
+			background-color: #1E1A70;
+			color: white;
+		}
+
+		.progress-step {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background-color: #e5e5e5;
+			font-size: 16px;
+			font-weight: bold;
+			color: #fff;
+		}
+
+		.progress-step.completed {
+			background-color: #2ECC71;
+		}
+
+		.progress-line {
+			flex-grow: 1;
+			height: 4px;
+			background-color: #e5e5e5;
+
+		}
+
+		.progress-line.active {
+			background-color: #2ECC71;
+		}
+
+		.vendor-table {
+			width: 30%;
+		}
+
+		.progress-section {
+			width: 70%;
+		}
+
+		.version-history {
+			margin-top: 30px;
+		}
+
+		.card-custom {
+			border: 1px solid #ddd;
+			padding: 32px;
+			height: auto;  /* Allows the card to adjust its height based on content */
+			min-height: 264px;  /* Ensures the card doesn't collapse too much when the content is small */
+			background-color: #fff;
+			margin-top: 20px;
+			position: relative;
+
+		}
+		.header-custom {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.status-active {
+			/*color: green;*/
+			/*font-weight: bold;*/
+		}
+		.status-scheduled {
+			color: green;
+		}
+		.rfq-info {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.rfq-info div {
+			margin-bottom: 10px;
+		}
+		/*.icon-buttons {*/
+		/*	position: absolute;*/
+		/*	top: 20px;*/
+		/*	right: 20px;*/
+		/*}*/
+		.icon-buttons i {
+			font-size: 16px;
+			color: #555;
+			margin-left: 10px;
+			cursor: pointer;
+		}
+		.icon-buttons i:hover {
+			color: #f00; /* Highlight on hover */
+		}
+
+
+		/* Ensures consistent spacing and alignment */
+		.rfq-info .d-flex {
+			display: flex;
+			align-items: center;
+			margin-bottom: 10px; /* Adds spacing between rows */
+		}
+
+		.rfq-info .d-flex > div {
+			font-size: 18px;
+			color: #241D75;
+		}
+
+		/* Makes labels bold */
+		.rfq-info .d-flex div:first-child {
+			font-weight: bold;
+		}
+
+		@media (max-width: 767px) {
+			.rfq-info .col-md-4 {
+				margin-bottom: 20px; /* Adds more space on smaller screens */
+			}
+		}

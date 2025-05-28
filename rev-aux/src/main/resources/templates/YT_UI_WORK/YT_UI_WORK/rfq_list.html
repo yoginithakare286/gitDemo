@@ -1,0 +1,236 @@
+		
+
+
+
+
+		<div class="tab-pane" id="procurement-rfq">
+		
+			<!--begin::Nav-->
+			<ul class="nav flex-wrap border-transparent fw-bold" style="padding: 0px!important; margin: 0px!important;"
+				id="procurement-rfq_tabs">
+				<!--begin::Nav item-->
+				<li class="nav-item my-1">
+					<button
+						class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase active"
+						id="procurement_rfq_active_rfq_button" data-tab="rfq" style="width: 350px;">
+						Active RFQ
+					</button>
+				</li>
+		
+				<!--end::Nav item-->
+				<li class="nav-item my-1">
+					<button
+						class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 "
+						style="width: 350px;" id="procurement_rfq_submitted_rfq_button" data-tab="vendor-metric">
+						Submitted RFQ
+					</button>
+				</li>
+		
+		
+				<!--end::Nav item-->
+			</ul>
+			<!--end::Nav-->
+		
+		
+		
+			<div id="procurement-rfq_tab-content">
+				<div class="procurement-rfq_tab-pane active" id="rfq">
+		
+					<div class="container-fluid mt-4">
+						<div class="d-flex flex-wrap align-items-center justify-content-between" style="height: 120px;">
+							<!-- Grouped Buttons -->
+							<div class="d-flex mb-2 mb-md-0 flex-grow-1 me-3">
+								<div id="search-wrapper2" class="d-flex align-items-center w-100" style="max-width: 500px;">
+									<i class="search-icon fas fa-search me-2"></i>
+									<input type="text" id="search2" placeholder="Search"
+										class="form-control form-control-sm w-100" />
+								</div>
+							</div>
+		
+							<button style="background: #FF7020;" type="submit" class="btn btn-sm btn-primary"
+								data-kt-menu-dismiss="true" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+								Create RFQ
+							</button>
+		
+						</div>
+		
+						<div class="card-custom">
+							<!-- Icons -->
+							<div class="icon-buttons"
+								style="display: flex; justify-content: space-between; width: calc(100% - 31px); position: absolute; top: 20px; left: 31px; right: 0; max-width: 100%; box-sizing: border-box;">
+								<span style="color: #241D75; font-size: 18px; letter-spacing: 1px; flex-shrink: 0;">RFQ Type :
+									TOOLS</span>
+		
+								<div style="display: flex; align-items: center; flex-shrink: 0; margin-right: 14px">
+									<i class="fas fa-pen" title="Edit"></i>
+									<i class="fas fa-trash" title="Delete"></i>
+								</div>
+							</div>
+		
+		
+		
+		
+							<!-- RFQ Details -->
+							<div>
+		
+								<br>
+								<br>
+								<div class="d-flex flex-wrap justify-content-between align-items-center">
+									<div class="d-flex flex-wrap new_up_test"
+										style="width: 70%; justify-content: space-between;">
+										<span class="text-primary fs-1"
+											style="color: #241D75; font-size: 18px!important; flex-grow: 1; margin-bottom: 10px;">RFQ
+											ID &nbsp;: &nbsp;
+											<a href="rfq_detailed_screen.html"
+												class="text-decoration-underline text-primary">NT3736</a>
+										</span>
+		
+										<span class="fs-6"
+											style="color: #000; font-size: 18px!important; flex-grow: 1; margin-bottom: 10px;">RFQ
+											Days &nbsp;: &nbsp;
+											<a href="#" class="text-decoration-underline text-primary"
+												style="color: #000!important;">2 Days</a>
+										</span>
+		
+										<span class="fs-6"
+											style="color: #000; font-size: 18px!important; flex-grow: 1; margin-bottom: 10px;">RFQ
+											Start Date &nbsp;: &nbsp;
+											<a href="#" class="text-decoration-underline text-primary"
+												style="color: #0075FF!important;">02-08-2024</a>
+										</span>
+		
+										<span class="fs-6"
+											style="color: #000; font-size: 18px!important; flex-grow: 1; margin-bottom: 10px;">|</span>
+		
+										<span class="fs-6"
+											style="color: #000; font-size: 18px!important; flex-grow: 1; margin-bottom: 10px;">RFQ
+											End Date &nbsp;: &nbsp;
+											<a href="#" class="text-decoration-underline text-primary"
+												style="color: #0075FF!important;">02-10-2024</a>
+										</span>
+									</div>
+		
+									<div class="d-flex" style="width: 14%; justify-content: flex-start;">
+										<span class="fs-6 status-active"
+											style="font-size: 18px!important; font-weight: normal!important;;"> RFQ Status:
+											<span style="color:#0A750E;">ACTIVE</span> </span>
+									</div>
+								</div>
+		
+		
+		
+		
+							</div>
+		
+		
+		
+		
+							<div class="rfq-info row justify-content-center" style="margin-left: 40px; margin-top: 20px;">
+								<div class="col-12 col-md-4 mb-3">
+									<div class="d-flex" style="padding: 0px; margin: 0px">
+										<div style="color: #000; font-size: 18px!important; flex-shrink: 0; width: 40%; font-weight: normal!important;"
+											class="text_class">Customer</div>
+										<div style="font-size: 18px!important; color: #241D75; text-align: center; width: 5%;">:
+										</div>
+										<div style="color: #000; font-size: 18px!important; width: 55%;">Plastic Omnium</div>
+									</div>
+									<div class="d-flex" style="padding: 0px; margin: 0px">
+										<div
+											style="color: #000; font-size: 18px!important; flex-shrink: 0; width: 40%;font-weight: normal!important;">
+											RFQ Received Date</div>
+										<div style="font-size: 18px!important; color: #241D75; text-align: center; width: 5%;">:
+										</div>
+										<div style="color: #000; font-size: 18px!important; width: 55%;">01-20-2024</div>
+									</div>
+									<div class="d-flex" style="padding: 0px; margin: 0px">
+										<div
+											style="color: #000; font-size: 18px!important; flex-shrink: 0; width: 40%;font-weight: normal!important;">
+											Quote Due Date</div>
+										<div style="font-size: 18px!important; color: #241D75; text-align: center; width: 5%;">:
+										</div>
+										<div style="color: #000; font-size: 18px!important; width: 55%;">01-22-2024</div>
+									</div>
+		
+									<div class="d-flex" style="padding: 0px; margin: 0px">
+										<div
+											style="color: #000; font-size: 18px!important; flex-shrink: 0; width: 40%;font-weight: normal!important;">
+											Part / Program Name</div>
+										<div style="font-size: 18px!important; color: #241D75; text-align: center; width: 5%;">:
+										</div>
+										<div style="color: #000; font-size: 18px!important; width: 55%;">GM L234</div>
+									</div>
+								</div>
+		
+		
+								<div class="col-12 col-md-4 mb-3">
+									<div class="d-flex" style="padding: 0px; margin: 0px">
+										<div
+											style="color: #000; font-size: 18px!important; flex-shrink: 0; width: 40%; font-weight: normal!important;">
+											Expected Launch</div>
+										<div style="font-size: 18px!important; color: #241D75; text-align: center; width: 5%;">:
+										</div>
+										<div style="color: #000; font-size: 18px!important; width: 55%;">Q1</div>
+									</div>
+									<div class="d-flex" style="padding: 0px; margin: 0px">
+										<div
+											style="color: #000; font-size: 18px!important; flex-shrink: 0; width: 40%;font-weight: normal!important;">
+											Quote Due Date</div>
+										<div style="font-size: 18px!important; color: #241D75; text-align: center; width: 5%;">:
+										</div>
+										<div style="color: #000; font-size: 18px!important; width: 55%;">01-22-2024</div>
+									</div>
+									<div class="d-flex" style="padding: 0px; margin: 0px">
+										<div
+											style="color: #000; font-size: 18px!important; flex-shrink: 0; width: 40%;font-weight: normal!important;">
+											Requestor</div>
+										<div style="font-size: 18px!important; color: #241D75; text-align: center; width: 5%;">:
+										</div>
+										<div style="color: #000; font-size: 18px!important; width: 55%;">Aditya Deshpande</div>
+									</div>
+		
+		
+								</div>
+		
+								<div class="col-12 col-md-4 mb-3 text-center">
+									<div class="d-flex" style=" justify-content: flex-end;">
+										<span class="fs-6 status-active"
+											style="font-size: 18px!important; font-weight: normal!important;;">RA Status : <span
+												style="color:#0A750E;">SCHEDULED</span> </span>
+									</div>
+								</div>
+							</div>
+		
+		
+		
+						</div>
+					</div>
+		
+		
+		
+		
+				</div>
+				<div class="procurement-rfq_tab-pane" id="vendor-metric">
+		
+				</div>
+		
+			</div>
+		
+			<div class="card mb-5 mb-xl-10">
+				<!--begin::Body-->
+		
+		
+		
+		
+		
+		
+		
+				<!-- Tab Content -->
+		
+		
+		
+		
+		
+		
+			</div>
+		
+		</div>
