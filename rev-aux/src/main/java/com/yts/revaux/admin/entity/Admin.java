@@ -11,7 +11,7 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String user_name;
     private String role;  // Example role: "ADMIN", "USER"
     private String yt;
     
@@ -19,7 +19,7 @@ public class Admin {
     
     @Override
 	public String toString() {
-		return "Admin [id=" + id + ", username=" + username + ", role=" + role + ", yt=" + yt + "]";
+		return "Admin [id=" + id + ", user_name=" + user_name + ", role=" + role + ", yt=" + yt + "]";
 	}
 
 	public String getYt() {
@@ -39,12 +39,12 @@ public class Admin {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getuser_name() {
+        return user_name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setuser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public String getRole() {
