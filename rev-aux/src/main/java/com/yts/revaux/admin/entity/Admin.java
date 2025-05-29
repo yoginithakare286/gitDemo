@@ -13,8 +13,24 @@ public class Admin {
 
     private String username;
     private String role;  // Example role: "ADMIN", "USER"
+    private String yt;
+    
+    
+    
+    @Override
+	public String toString() {
+		return "Admin [id=" + id + ", username=" + username + ", role=" + role + ", yt=" + yt + "]";
+	}
 
-    // Getters and Setters
+	public String getYt() {
+		return yt;
+	}
+
+	public void setYt(String yt) {
+		this.yt = yt;
+	}
+
+	// Getters and Setters
     public Long getId() {
         return id;
     }

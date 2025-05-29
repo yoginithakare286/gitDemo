@@ -6,8 +6,24 @@ public class AdminDTO {
     private Long id;
     private String username;
     private String role;
+    private String yt;
+    
+    
 
-    // Getters and Setters
+    @Override
+	public String toString() {
+		return "AdminDTO [id=" + id + ", username=" + username + ", role=" + role + ", yt=" + yt + "]";
+	}
+
+	public String getYt() {
+		return yt;
+	}
+
+	public void setYt(String yt) {
+		this.yt = yt;
+	}
+
+	// Getters and Setters
     public Long getId() {
         return id;
     }
