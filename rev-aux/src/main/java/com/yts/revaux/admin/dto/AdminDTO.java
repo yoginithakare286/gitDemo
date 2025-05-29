@@ -2,6 +2,7 @@ package com.yts.revaux.admin.dto;
 // uploading code to the github
 public class AdminDTO {
 // changes by yogini
+	// 2nd change
     private Long id;
     private String username;
     private String role;
