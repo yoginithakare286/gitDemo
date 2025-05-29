@@ -6,21 +6,21 @@ public class AdminDTO {
     private Long id;
     private String username;
     private String role;
-    private String yt;
+    private String y_t;
     
     
 
     @Override
 	public String toString() {
-		return "AdminDTO [id=" + id + ", username=" + username + ", role=" + role + ", yt=" + yt + "]";
+		return "AdminDTO [id=" + id + ", username=" + username + ", role=" + role + ", y_t=" + y_t + "]";
 	}
 
-	public String getYt() {
-		return yt;
+	public String gety_t() {
+		return y_t;
 	}
 
-	public void setYt(String yt) {
-		this.yt = yt;
+	public void sety_t(String y_t) {
+		this.y_t = y_t;
 	}
 
 	// Getters and Setters
