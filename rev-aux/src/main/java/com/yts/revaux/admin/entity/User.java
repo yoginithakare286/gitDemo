@@ -1,3 +1,5 @@
+
+// changes by yogini
 package com.yts.revaux.admin.entity;
 
 import jakarta.persistence.*;
