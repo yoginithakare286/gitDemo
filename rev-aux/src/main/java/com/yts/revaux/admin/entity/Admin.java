@@ -12,14 +12,14 @@ public class Admin {
     private Long id;
 
     private String user_name;
-    private String role;  // Example role: "ADMIN", "USER"
+    private String role_name;  // Example role_name: "ADMIN", "USER"
     private String yt;
     
     
     
     @Override
 	public String toString() {
-		return "Admin [id=" + id + ", user_name=" + user_name + ", role=" + role + ", yt=" + yt + "]";
+		return "Admin [id=" + id + ", user_name=" + user_name + ", role_name=" + role_name + ", yt=" + yt + "]";
 	}
 
 	public String getYt() {
@@ -47,11 +47,11 @@ public class Admin {
         this.user_name = user_name;
     }
 
-    public String getRole() {
-        return role;
+    public String getrole_name() {
+        return role_name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setrole_name(String role_name) {
+        this.role_name = role_name;
     }
 }
