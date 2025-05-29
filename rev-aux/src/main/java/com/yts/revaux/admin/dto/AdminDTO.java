@@ -13,15 +13,15 @@ public class AdminDTO {
 
     @Override
 	public String toString() {
-		return "AdminDTO [id=" + id + ", username=" + username + ", role=" + role + ", y_t=" + y_t + "]";
+		return "AdminDTO [id=" + id + ", username=" + username + ", role=" + role + ", yt=" + yt + "]";
 	}
 
 	public String gety_t() {
-		return y_t;
+		return yt;
 	}
 
 	public void sety_t(String y_t) {
-		this.y_t = y_t;
+		this.yt = y_t;
 	}
 
 	// Getters and Setters
