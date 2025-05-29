@@ -7,7 +7,8 @@ public class AdminDTO {
     private String username;
     private String role;
     private String yt;
-    
+    public int mo;
+    public String city;
     
 
     @Override
