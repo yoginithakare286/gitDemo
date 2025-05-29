@@ -10,4 +10,5 @@ import com.yts.revaux.admin.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<Admin> findByUsername(String username);
     Optional<User> findByUsernames(String username);
+    Optional<User> findByUsernamess(String username);
 }
