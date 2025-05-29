@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //6th change
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 	   Optional<User> findByUsername(String username);
+	   Optional<User> findByUsernames(String username);
 }
